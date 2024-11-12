@@ -20,6 +20,8 @@ __Vectors:
 .section .text
 .align 2
 
+.syntax unified
+
 .global Reset_Handler
 .type Reset_Handler, %function
 

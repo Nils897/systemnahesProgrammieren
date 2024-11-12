@@ -4,7 +4,7 @@
 
 cmake_minimum_required( VERSION 3.22 )
 
-project( arm_cortex_m0 LANGUAGES ASM C )
+project( arm_cortex_m0_start LANGUAGES ASM C )
 
 # Define all Files:
 add_executable( testApp )
