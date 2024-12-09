@@ -19,12 +19,20 @@ static void zeroBss( void );
  **/
 static void copyData( void );
 
-void entry_c( void )
+__attribute__((used)) void entry_c( void )
 {
   zeroBss();
   copyData();
-}
 
+  extern int main( void ); // TODO: make it better!!!
+
+  main();
+
+  // endless loop
+  for (;;)
+  {
+  }
+}
 static void zeroBss( void )
 {
   // Symbol is located on start of BSS Section

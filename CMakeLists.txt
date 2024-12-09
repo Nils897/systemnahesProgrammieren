@@ -1,6 +1,5 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+# This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+# If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 cmake_minimum_required( VERSION 3.22 )
 
@@ -14,7 +13,16 @@ target_sources(
   PRIVATE
     entry.S
     entry_c.h
-    entry_c.c )
+    entry_c.c
+    main.c
+    var_test_1.h
+    var_test_1.c
+    var_test_2.h
+    var_test_2.c
+    fibonacci.h
+    fibonacci.c
+    faculty.h
+    faculty.c )
 
 target_link_options(
   testApp
