@@ -12,7 +12,9 @@ add_executable( testApp )
 target_sources(
   testApp
   PRIVATE
-    entry.S )
+    entry.S
+    entry_c.h
+    entry_c.c )
 
 target_link_options(
   testApp

@@ -21,12 +21,20 @@ __Vectors:
 .align 2
 
 .syntax unified
+.thumb
 
 .global Reset_Handler
 .type Reset_Handler, %function
 
 Reset_Handler:
   NOP
+
+  MOVS R0,#1
+start_loop:
+  CMP R0,#0
+  BNE start_loop
+
+  BL entry_c
 
 endless_loop:
   NOP
