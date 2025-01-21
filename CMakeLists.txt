@@ -26,7 +26,9 @@ target_sources(
     devices/register_access.h
     devices/register_access.c
     devices/random.h
-    devices/random.c )
+    devices/random.c
+    devices/uart.h
+    devices/uart.c )
 
 target_link_options(
   testApp
