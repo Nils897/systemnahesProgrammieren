@@ -25,7 +25,7 @@ DHWB Ravensburg.
  - CMake
 
 Hinweis:
-Bei SUSE scheint der standard GDB ein GDB-Multiarch zu sein.
+Unteranderem bei SUSE, Arch, NixOs scheint der standard GDB ein GDB-Multiarch zu sein.
 
 ### Windows
 Installation von CMake über Download des Installers (https://cmake.org/download/)
@@ -92,15 +92,18 @@ Unter debug Configuration kann eine "Remote Debug" Konfiguration angelegt werden
 
 ### Visual Studio Code
 
+VS-Code kann über einen Workspace konfiguriert werden, welcher über die Datei "linux.code-workspace" bzw "windows.code-workspace" geöffnet werden kann.
+
 Folgende Extensions werden benötigt:
 - jkearins.action-buttons-ext
 - webfreak.debug
-- maxmitti.cmake-tools-fork
-- twxs.cmake
+- ms-vscode.cmake-tools
 - dan-c-underwood.arm
 
 Diese sind ebenfalls als empfohlene Extensions im Workspace definiert.
 
 Nach Installation erkennt VScode die CMake Presets und bietet diese gleich an.
-Ebenfalls wird in der Statusleiste ein Button **Start Qemu** hinzugefügt,
-über diesen die QEmu-Session (also unser Target) gestartet werden kann.
+Ebenfalls werden in der Statusleiste Knöpfe um das CMake Projekt zu *konfigurieren* und zu *bauen*,
+die qemu-Instanz (neu) zu *starten* und gdb zu starten hinzugefügt.
+
+Nach Änderungen am Code muss das CMake Projekt neugebaut und die qemu-Instanz neugestartet werden.
