@@ -1,0 +1,98 @@
+{
+    /* Just use everything in this folder */
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        /* Add the Start Command for Qemu to a orange button in statusbar */
+        "actionButtons": {
+            "reloadButton": null,
+            "defaultColor": "white",
+            "commands": [
+                {
+                    "name": "$(gear) Configure",
+                    "color": "red",
+                    "useVsCodeApi": true,
+                    "command": "cmake.configure"
+                },
+                {
+                    "name": "$(tools) Build",
+                    "color": "yellow",
+                    "useVsCodeApi": true,
+                    "command": "cmake.build"
+                },
+                {
+                    "name": "$(sync) (Re)start Qemu",
+                    "color": "turquoise",
+                    "command": "qemu-system-arm -M microbit -device loader,file=build-cortex-m0/testApp.elf -nographic -S -s -serial mon:stdio",
+                    "singleInstance": true
+                },
+                {
+                    "name": "$(play) Attach gdb",
+                    "color": "lightgreen",
+                    "useVsCodeApi": true,
+                    "command": "workbench.action.debug.start"
+                },
+            ]
+        },
+        /* Only show custom buttons in statusbar */
+        "cmake.options.statusBarVisibility": "hidden",
+    },
+    /* Launch Config for "Native Debug" Extension */
+    "launch": {
+        "configurations": [
+            {
+                "type": "gdb",
+                "request": "attach",
+                "name": "Attach to qemu",
+                /* Depending on your Distribution, the gdb executable can be "gdb" or "gdb-multiarch" */
+                "gdbpath": "gdb-multiarch",
+                "executable": "./build-cortex-m0/testApp.elf",
+                "target": "localhost:1234",
+                "remote": true,
+                "cwd": "${workspaceRoot}",
+                "valuesFormatting": "parseText",
+                "stopAtConnect": true,
+            }
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Start QEMU",
+                "type": "shell",
+                "command": "qemu-system-arm",
+                "args": [
+                    "-M",
+                    "microbit",
+                    "-device",
+                    "loader,file=build-cortex-m0/testApp.elf",
+                    "-nographic",
+                    "-S",
+                    "-s",
+                    "-serial",
+                    "mon:stdio"
+                ],
+                "isBackground": true,
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+        ]
+    },
+    /* Used Extensions */
+    "extensions": {
+        "recommendations": [
+            "jkearins.action-buttons-ext",
+            "webfreak.debug",
+            "ms-vscode.cmake-tools",
+            "dan-c-underwood.arm"
+        ]
+    },
+}
