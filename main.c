@@ -4,15 +4,32 @@
 
 #include "devices/random.h"
 
+#include <stdbool.h>
+
+static void waitRelease( void )
+{
+  bool start = false;
+  while ( !start )
+  {
+  }
+}
+
+static void doRandomNumber( uint8_t randomNumber )
+{
+  (void)randomNumber;
+}
+
 int main( void )
 {
+  //waitRelease();
+
   // Initialize the Module
   rng_init();
-  // Do other stuff, until 1st Random Number is generated...
-  // Get the Random Value immediately.
-  uint8_t randomNumber = rng_getRandomValue_immediately();
-  // do something:
-  if(randomNumber > 100) {
-    // kill_cortex_m();
+
+  while ( true )
+  {
+    uint8_t randomNumber = rng_getRandomValue_waiting();
+
+    doRandomNumber( randomNumber );
   }
 }

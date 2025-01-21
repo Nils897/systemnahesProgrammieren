@@ -4,17 +4,15 @@
 
 #include <stdint.h>
 
-
 /**
  * @brief Enables the generation of random numbers
  *
  * This is done by writing a `1` to the `START_TASK` of the RNG peripheral.
  */
-void rng_init() {
-
-	// Write a '1' to the Start Task, to start the generation of random numbers
-	register_write((RNG_BASE_ADDRESS + RNG_START), RNG_TASK_START);
-
+void rng_init( void )
+{
+  // Write a '1' to the Start Task, to start the generation of random numbers
+  register_write( ( RNG_BASE_ADDRESS | RNG_START ), RNG_TASK_START );
 }
 
 
@@ -25,15 +23,16 @@ void rng_init() {
  *
  * @return uint8_t random byte
  */
-uint8_t rng_getRandomValue_immediately() {
+uint8_t rng_getRandomValue_immediately( void )
+{
+  // Read 32-Bit Register containing the RNG Value
+  uint32_t randomValue = register_read( ( RNG_BASE_ADDRESS | RNG_VALUE ) );
 
-	// Read 32-Bit Register containing the RNG Value
-	uint32_t randomValue = register_read( (RNG_BASE_ADDRESS + RNG_VALUE) );
-
-	// its actual just 8-Bit, so cast it.
-	return (uint8_t)randomValue;
+  // its actual just 8-Bit, so cast it.
+  return (uint8_t)randomValue;
 }
 
+static volatile uint32_t notReadyCount = 0U;
 
 /**
  * @brief # THIS FUNCTION IS A STUB! #
@@ -46,12 +45,22 @@ uint8_t rng_getRandomValue_immediately() {
  * - it should return the random byte
  *
  * @return uint8_t (curently) always `0`
- */
-uint8_t rng_getRandomValue_waiting() {
+ **/
+uint8_t rng_getRandomValue_waiting()
+{
+  uint32_t notReadyCountLocal = 0U;
+  for (
+    volatile uint32_t valueReady = register_read( ( RNG_BASE_ADDRESS | RNG_VALRDY ) );
+    valueReady == 0U;
+    valueReady = register_read( ( RNG_BASE_ADDRESS | RNG_VALRDY ) ) )
+  {
+    ++notReadyCountLocal;
+  }
 
-	// TODO:
-	// Implement a 'waiting' here, if needed
+  if ( notReadyCount < notReadyCountLocal )
+  {
+    notReadyCount = notReadyCountLocal;
+  }
 
-	// for now, return 0
-	return 0;
+  return rng_getRandomValue_immediately();
 }

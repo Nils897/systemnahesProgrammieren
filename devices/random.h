@@ -26,28 +26,23 @@
 #define RNG_EVENT_TRIGGER     1    // Value for setting/starting an Event
 #define RNG_EVENT_CLEAR       0    // Value for clearing/stopping an Event
 
-
-// C - Functions --------------------------------------------------------------
-
 /**
  * @brief Enables the generation of random numbers
  */
-void rng_init();
-
+void rng_init( void );
 
 /**
  * @brief Get the Random Value from the generator immediately.
  *
  * The function is **NOT** waiting until the next value is generated!
- * 
+ *
  * @return uint8_t random byte
  */
-uint8_t rng_getRandomValue_immediately();
-
+uint8_t rng_getRandomValue_immediately( void );
 
 /**
  * @brief This is a function stub. Implement it, if needed.
  *
  * @return uint8_t always `0`
  */
-uint8_t rng_getRandomValue_waiting();
+uint8_t rng_getRandomValue_waiting( void );
