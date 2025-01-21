@@ -22,7 +22,11 @@ target_sources(
     fibonacci.h
     fibonacci.c
     faculty.h
-    faculty.c )
+    faculty.c
+    devices/register_access.h
+    devices/register_access.c
+    devices/random.h
+    devices/random.c )
 
 target_link_options(
   testApp
