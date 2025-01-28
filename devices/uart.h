@@ -51,14 +51,18 @@ void uart_init();
 
 /**
  * @brief Writes/Sends a byte over the serial Port
- * 
+ *
  * @param data byte to send (ASCII)
  */
 void uart_writeByte(uint8_t data);
 
 /**
  * @brief Read/Receive a byte from the serial Port
- * 
+ *
  * @return uint8_t received Byte or 0 (zero) if nothing was received
  */
 uint8_t uart_readByte();
+
+void uart_writeString( const char * string );
+
+void uart_writeNumber( uint8_t number );
