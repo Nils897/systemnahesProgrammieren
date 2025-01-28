@@ -28,7 +28,12 @@ target_sources(
     devices/random.h
     devices/random.c
     devices/uart.h
-    devices/uart.c )
+    devices/uart.c
+    devices/nvic.h
+    devices/timer.h
+    devices/timer.c )
+
+target_link_libraries( testApp PRIVATE gcc )
 
 target_link_options(
   testApp
