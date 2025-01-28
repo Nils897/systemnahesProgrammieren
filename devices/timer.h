@@ -1,9 +1,33 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
-// Definitions ----------------------------------------------------------------
+typedef enum Timer {
+  TIMER0,
+  TIMER1,
+  TIMER2
+} Timer;
+
+typedef enum TimerMode{
+  TIMER_MODE_TIMER = 0,
+  TIMER_MODE_COUNTER = 1
+} TimerMode;
+
+typedef enum TimerBitMode{
+  TIMER_BIT_MODE_16 = 0,
+  TIMER_BIT_MODE_8 = 1,
+  TIMER_BIT_MODE_24 = 2,
+  TIMER_BIT_MODE_32 = 3,
+} TimerBitMode;
+
+typedef enum TimerCaptureCompare {
+  CC0,
+  CC1,
+  CC2,
+  CC3
+} TimerCaptureCompare;
 
 // Base Address (Instance)
 #define TIMER0_BASE_ADDRESS    0x40008000
@@ -64,32 +88,73 @@
 // C Function Definitions -----------------------------------------------------
 
 /**
- * @brief Initializes the Timer[0] Peripheral to a value ~4sek
+ * @brief Default Initialisation of Timer.
+ *
+ * Initializes the Timer Peripheral to a value ~4sek.
  * This is just for demonstration and could be changed to your needs
- */
-void timer_init();
-
+ **/
+void timer_init( Timer timer );
 
 /**
- * @brief Initializes the Timer[0] Peripheral to the Values given
- * It also enable the shortcut between CC[0] and CLEAR, so that the timer
- * is cleared, when the compared value is reached.
- * 
+ * @brief Initialises the Timer.
+ *
  * Compare Value set is for CC[0]
- * 
- * @param prescaler    Register value according to `Table 147: PRESCALER`
- * @param bitmode      Register value according to `Table 146: BITMODE`
- * @param compareValue Register value according to `Table 148: CC[0]`
- */
-void timer_init_detailed(uint32_t prescaler, uint32_t bitmode, uint32_t compareValue);
+ *
+ * @param[in] prescaler
+ *   Register value according to `Table 147: PRESCALER`.
+ *   value 0..9 is valid ==> 2^0 .. 2^9
+ * @param[in] bitmode
+ *   Bit Mode.
+ **/
+void timer_init_detailed(
+  Timer timer,
+  uint8_t prescaler,
+  TimerMode mode,
+  TimerBitMode bitMode );
 
+/**
+ * @brief Set the Capture/ Compare Register of the Timer.
+ *
+ * It also enables the shortcut between CC[0] and CLEAR, so that the timer is cleared, when the compared value is
+ * reached.
+ *
+ * @param[in] timer
+ *   Timer
+ * @param[in] captureCompare
+ *   Capture Compare Register
+ * @param[in] value
+ *   New Value
+ * @param[in] shortcutClear
+ *
+ **/
+void timer_captureCompareSet( Timer timer, TimerCaptureCompare captureCompare, uint32_t value, bool shortcutClear );
+
+/**
+ * @brief Gets the Capture Compare Register of Timer.
+ *
+ * @param timer
+ * @param captureCompare
+ *
+ * @return
+ **/
+uint32_t timer_captureCompareGet( Timer timer, TimerCaptureCompare captureCompare );
+
+void timer_start( Timer timer );
+
+void timer_stop( Timer timer );
+
+void timer_count( Timer timer );
+
+void timer_clear( Timer timer );
+
+void timer_capture( Timer timer, TimerCaptureCompare capture );
 
 /**
  * @brief Clears the Compare Event for CC[0]
- * 
+ *
  * This could be useful for stopping the
  * timer from pulling the interrupt-line.
  */
-void timer_clearCompareEvent();
+void timer_clearCompareEvent( Timer timer );
 
 #endif
