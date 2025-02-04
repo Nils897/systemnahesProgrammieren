@@ -1,8 +1,21 @@
 #include <stdint.h>
 
 #include "uart.h"
+#include "timer.h"
 #include "register_access.h"
+#include "nvic.h"
 
+void Interrupt2_Handler(void);
+
+void Interrupt2_Handler(void)
+{
+  register_write(UART_BASE_ADDRESS | UART_RXDRDY, 0 );
+  register_write( Interrupt_ICPR, Interrupt_ID2 );
+
+  uart_readByte();
+  uart_writeByte('X');
+  timer_stop( TIMER0 );
+}
 
 void uart_init()
 {
@@ -40,15 +53,22 @@ void uart_init()
 
   // Fire the START event for the Receiver: ---------------------------------
   register_write( ( UART_BASE_ADDRESS + UART_STARTRX ), UART_TASK_START );
+
+
+  // Enable Interrupt
+  register_write((UART_BASE_ADDRESS | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
+
+  // Enable User-Interrupt from Cortex-M0
+  // ID2 ist der UART
+  register_write( Interrupt_Set_Enable, Interrupt_ID2 );
 }
 
 void uart_writeByte( uint8_t data )
 {
-
   // write the data to the TXD register
   register_write( ( UART_BASE_ADDRESS + UART_TXD ), data );
 
-  // need to "wait" until its transmited
+  // need to "wait" until its transmitted
 }
 
 uint8_t uart_readByte()

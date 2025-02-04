@@ -41,6 +41,8 @@
 #define UART_EVENT_TRIGGER     1    // Value for setting/starting an Event
 #define UART_EVENT_CLEAR       0    // Value for clearing/stopping an Event
 
+#define UART_INT_RXDRDY (1 << 2 )
+
 // C Function Definitions -----------------------------------------------------
 
 /**

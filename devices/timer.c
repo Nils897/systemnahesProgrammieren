@@ -40,7 +40,7 @@ void Interrupt8_Handler(void);
 
 void Interrupt8_Handler(void)
 {
-  register_write(TIMER0_BASE_ADDRESS | TIMER_COMPARE_0, 0 );
+  register_write( TIMER0_BASE_ADDRESS | TIMER_COMPARE_0, 0 );
   register_write( Interrupt_ICPR, Interrupt_ID8 );
 
   uart_writeString( ".\n");
