@@ -2,7 +2,7 @@
 
 #include "timer.h"
 #include "nvic.h"
-
+#include "uart.h"
 #include "register_access.h"
 
 static const uint32_t TimerBase[3] =
@@ -30,11 +30,21 @@ static const uint32_t TimerCompareEventOffset[4] =
 
 static const uint32_t TimerCaptureTaskOffset[4] =
 {
-    TIMER_CAPTURE_0,
-    TIMER_CAPTURE_1,
-    TIMER_CAPTURE_2,
-    TIMER_CAPTURE_3
+  TIMER_CAPTURE_0,
+  TIMER_CAPTURE_1,
+  TIMER_CAPTURE_2,
+  TIMER_CAPTURE_3
 };
+
+void Interrupt8_Handler(void);
+
+void Interrupt8_Handler(void)
+{
+  register_write(TIMER0_BASE_ADDRESS | TIMER_COMPARE_0, 0 );
+  register_write( Interrupt_ICPR, Interrupt_ID8 );
+
+  uart_writeString( ".\n");
+}
 
 void timer_init( Timer const timer )
 {
@@ -55,13 +65,13 @@ void timer_init_detailed( Timer const timer, uint8_t const prescaler, TimerMode 
   // BitMode
   register_write(timerBase | TIMER_BITMODE , (uint32_t)bitMode );
 
-#if 0
+#if 1
   // Enable Interrupt
-  register_write((TIMER0_BASE_ADDRESS + TIMER_INTENSET), INT_COMPARE0); // Interrupt on Compare[0]
+  register_write((TIMER0_BASE_ADDRESS | TIMER_INTENSET), INT_COMPARE0 ); // Interrupt on Compare[0]
 
   // Enable User-Interrupt from Cortex-M0
   // ID8 ist der Timer0
-  register_write(Interrupt_Set_Enable, Interrupt_ID8);
+  register_write( Interrupt_Set_Enable, Interrupt_ID8 );
 #endif
 }
 
@@ -122,7 +132,6 @@ void timer_capture( Timer timer, TimerCaptureCompare capture )
   const uint32_t timerCaptureTaskOffset = timerBase | TimerCaptureTaskOffset[ capture ];
 
   register_write( timerCaptureTaskOffset , TIMER_TASK_START );
-
 }
 
 void timer_clearCompareEvent( Timer timer )

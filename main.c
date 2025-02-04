@@ -52,15 +52,20 @@ static void randomNumberTest( void )
 
 static void timerTest( void )
 {
-  timer_init( TIMER0 );
+  //timer_init( TIMER0 );
 
-  timer_captureCompareSet( TIMER0, CC0, 0, false );
+  timer_init_detailed( TIMER0, 15, TIMER_MODE_TIMER, TIMER_BIT_MODE_32 );
+
+  timer_captureCompareSet( TIMER0, CC0, 2000, true );
 
   timer_start( TIMER0 );
 
-  timer_capture( TIMER0, CC0 );
+  while ( true )
+  {
+    timer_capture( TIMER0, CC1 );
 
-  uint32_t captureValue = timer_captureCompareGet( TIMER0, CC0 );
+    uint32_t captureValue = timer_captureCompareGet( TIMER0, CC1 );
 
-  uart_writeNumber( captureValue );
+    //uart_writeNumber( captureValue );
+  }
 }
