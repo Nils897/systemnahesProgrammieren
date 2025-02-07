@@ -1,7 +1,10 @@
-# Arm Cortex-M0 Base Project
+# Systemnahes Programmierung 2 - Projektabgabe
 
-Example Workspace für die Vorlesung Systemnahe Programmierung I an der
-DHWB Ravensburg.
+Projekt für die Vorlesung Systemnahes Programmieren 2 in der 4. Theoriephase
+Contributor: Justin Lotwin, Linus Gerlach, Janne Nußbaum, Nils Fleschhut
+(Basisprojekt gegeben von Herrn Thomas Vogt)
+
+## 1. Build zum laufen kriegen
 
 ## Arm Documentation
  - [Cortex M0 Startseite](https://developer.arm.com/Processors/Cortex-M0)
@@ -107,3 +110,5 @@ Ebenfalls werden in der Statusleiste Knöpfe um das CMake Projekt zu *konfigurie
 die qemu-Instanz (neu) zu *starten* und gdb zu starten hinzugefügt.
 
 Nach Änderungen am Code muss das CMake Projekt neugebaut und die qemu-Instanz neugestartet werden.
+
+## 2. Projekt
