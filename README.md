@@ -1,8 +1,8 @@
 # Systemnahes Programmierung 2 - Projektabgabe
 
-Projekt für die Vorlesung Systemnahes Programmieren 2 in der 4. Theoriephase
-Contributor: Justin Lotwin, Linus Gerlach, Janne Nußbaum, Nils Fleschhut
-(Basisprojekt gegeben von Herrn Thomas Vogt)
+- Projekt für die Vorlesung Systemnahes Programmieren 2 in der 4. Theoriephase
+- Contributor: Justin Lotwin, Linus Gerlach, Janne Nußbaum, Nils Fleschhut
+- (Basisprojekt gegeben von Herrn Thomas Vogt)
 
 ## 1. Build zum laufen kriegen
 
