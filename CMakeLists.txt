@@ -15,14 +15,6 @@ target_sources(
     entry_c.h
     entry_c.c
     main.c
-    var_test_1.h
-    var_test_1.c
-    var_test_2.h
-    var_test_2.c
-    fibonacci.h
-    fibonacci.c
-    faculty.h
-    faculty.c
     devices/register_access.h
     devices/register_access.c
     devices/random.h
