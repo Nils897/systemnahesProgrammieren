@@ -1,7 +1,3 @@
-//
-// Created by infohoschie on 09.12.24.
-//
-
 #include "devices/random.h"
 #include "devices/uart.h"
 #include "devices/timer.h"
