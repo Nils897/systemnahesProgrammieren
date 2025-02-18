@@ -28,5 +28,7 @@ const char* WORDS[] = {
 void hangman( void )
 {
   uart_writeString( "Hangman started!\n" );
-
+  uart_writeString( "Enter a word: " );
+  uint8_t word = uart_readByte();
+  uart_writeNumber(word);
 }
