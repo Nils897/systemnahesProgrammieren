@@ -11,7 +11,7 @@ static void randomNumberTest( void );
 
 static void timerTest( void );
 
-static void hangman ( void );
+void hangman ( void );
 
 int main( void )
 {
@@ -19,7 +19,7 @@ int main( void )
 
   uart_init();
   uart_writeString( "Hello World!\n" );
-
+  hangman();
 
 }
 

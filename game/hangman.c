@@ -1,3 +1,4 @@
+#include "../devices/uart.h"
 //
 // Created by Nils on 18.02.25.
 //
@@ -24,8 +25,8 @@ const char* WORDS[] = {
   "zauberer"
 };
 
-int main()
+void hangman( void )
 {
+  uart_writeString( "Hangman started!\n" );
 
-  return 0;
 }
