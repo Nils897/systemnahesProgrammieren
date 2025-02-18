@@ -1,6 +1,7 @@
 #include "devices/random.h"
 #include "devices/uart.h"
 #include "devices/timer.h"
+#include "game/hangman.h"
 
 #include <stdbool.h>
 
@@ -10,18 +11,16 @@ static void randomNumberTest( void );
 
 static void timerTest( void );
 
+static void hangman ( void );
+
 int main( void )
 {
   //waitRelease();
 
   uart_init();
   uart_writeString( "Hello World!\n" );
-//  char myARRAY[]={ 'A','B','C' };
-//  uart_writeString( myARRAY );
 
-  // randomNumberTest();
 
-  timerTest();
 }
 
 static void waitRelease( void )
