@@ -6,7 +6,9 @@ cmake_minimum_required( VERSION 3.22 )
 project( arm_cortex_m0_start LANGUAGES ASM C )
 
 # Define all Files:
-add_executable( testApp )
+add_executable( testApp
+        game/hangman.h
+        game/hangman.c)
 
 target_sources(
   testApp
