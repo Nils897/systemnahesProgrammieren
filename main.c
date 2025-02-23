@@ -15,12 +15,9 @@ void hangman ( void );
 
 int main( void )
 {
-  //waitRelease();
-
   uart_init();
   uart_writeString( "Hello World!\n" );
-  hangman();
-
+  gameStart();
 }
 
 static void waitRelease( void )
