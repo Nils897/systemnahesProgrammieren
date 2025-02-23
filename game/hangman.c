@@ -28,6 +28,19 @@ const char* WORDS[] = {
   "zauberer"
 };
 
+uint8_t compareArrays(const char *word, const char *lines, uint8_t length)
+{
+  for (uint8_t i = 0; i < length; i++)
+  {
+    if (word[i] != lines[i])  // Wenn ein Zeichen unterschiedlich ist
+    {
+      return 0;  // Rückgabe 0 bedeutet, die Arrays sind nicht gleich
+    }
+  }
+  return 1;  // Rückgabe 1 bedeutet, die Arrays sind gleich
+}
+
+
 void hangman( void )
 {
   uart_writeString( "Hangman started!\n" );
@@ -36,9 +49,39 @@ void hangman( void )
   uart_writeByte(letter);
 }
 
-void spiel (char *word)
+void spiel (const char *word, const uint8_t length)
 {
-
+  char lines[length];
+  for (uint8_t i = 0; i < length; i++)
+  {
+    lines[i] = '_';
+  }
+  uint8_t userWon = 0;
+  while (userWon == 0)
+  {
+    uart_writeString("Word to guess: \n");
+    for (uint8_t i = 0; i < length; i++)
+    {
+      uart_writeByte(lines[i]);  // Gibt das Zeichen (Strich oder später Buchstabe) aus
+    }
+    uart_writeString("\n");
+    char guess = uart_readByte();
+    uint8_t found = 0;
+    for (uint8_t i = 0; i < length; i++)
+    {
+      if (word[i] == guess)
+      {
+        lines[i] = guess;  // Buchstabe ersetzen
+        found = 1;
+      }
+    }
+    if (!found)
+    {
+      uart_writeString("Incorrect guess.\n");
+    }
+    userWon = compareArrays(word, lines, length);
+  }
+  uart_writeString("You won!\n");
 }
 
 void getUserWord( char *word, uint8_t length)
@@ -70,12 +113,12 @@ void gameStart (void)
     if (choice == 1)
     {
       getUserWord(word, sizeof(word));
-      spiel(word);
+      spiel(word, sizeof(word));
     }
     else if (choice == 2)
     {
       getRandomWord(word, sizeof(word));
-      spiel(word);
+      spiel(word, sizeof(word));
     }
     else
     {
