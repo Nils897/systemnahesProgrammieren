@@ -17,8 +17,8 @@ target_sources(
     entry_c.h
     entry_c.c
     main.c
-    drawings.c
-    drawings.h
+        game/drawings.c
+        game/drawings.h
     devices/register_access.h
     devices/register_access.c
     devices/random.h

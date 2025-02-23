@@ -13,8 +13,8 @@ void Interrupt2_Handler(void)
   register_write( Interrupt_ICPR, Interrupt_ID2 );
 
   uint8_t input = uart_readByte();
-  uart_writeByte('X');
-  timer_stop( TIMER0 );
+  uart_writeByte(input);
+  //timer_stop( TIMER0 );
 }
 
 void uart_init()
@@ -56,17 +56,18 @@ void uart_init()
 
 
   // Enable Interrupt
-  register_write((UART_BASE_ADDRESS | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
+  //register_write((UART_BASE_ADDRESS | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
 
   // Enable User-Interrupt from Cortex-M0
   // ID2 ist der UART
-  register_write( Interrupt_Set_Enable, Interrupt_ID2 );
+  //register_write( Interrupt_Set_Enable, Interrupt_ID2 );
 }
 
 void uart_writeByte( uint8_t data )
 {
   // write the data to the TXD register
   register_write( ( UART_BASE_ADDRESS + UART_TXD ), data );
+  uart_readByte();
 
   // need to "wait" until its transmitted
 }
@@ -77,15 +78,14 @@ uint8_t uart_readByte()
   // if not ready, return 0
   uint32_t receiveIsReady =
     register_read( ( UART_BASE_ADDRESS + UART_RXDRDY ) );
-
   if ( receiveIsReady )
   {
-
     // we have to CLEAR the event before reading out from RXD
     register_write( ( UART_BASE_ADDRESS + UART_RXDRDY ), UART_EVENT_CLEAR );
-
+    uint8_t input = register_read( ( UART_BASE_ADDRESS + UART_RXD ) );
+    uart_writeByte(input);
     // FIFO is ready to read something out of it
-    return register_read( ( UART_BASE_ADDRESS + UART_RXD ) );
+    return input;
   }
   else
   {
@@ -96,6 +96,28 @@ uint8_t uart_readByte()
   }
 }
 
+char* uart_readLine()
+{
+  char word[20];
+  for (uint8_t i = 0; i < 20; i += 0)
+  {
+
+    uint8_t input = uart_readByte();
+    if (input == 13)
+    {
+      uart_writeByte('\n');
+      break;
+    }
+
+    if (input != 0)
+    {
+      word[i] = input;
+      i++;
+    }
+
+  }
+  return word;
+}
 
 uint8_t uart_readByteBlocking()
 {
