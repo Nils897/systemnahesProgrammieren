@@ -7,4 +7,10 @@
 
 void hangman();
 
+void gameStart();
+
+void getUserWord();
+
+void getRandomWord();
+
 #endif //HANGMAN_H

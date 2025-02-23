@@ -12,7 +12,7 @@ void Interrupt2_Handler(void)
   register_write(UART_BASE_ADDRESS | UART_RXDRDY, 0 );
   register_write( Interrupt_ICPR, Interrupt_ID2 );
 
-  uart_readByte();
+  uint8_t input = uart_readByte();
   uart_writeByte('X');
   timer_stop( TIMER0 );
 }
