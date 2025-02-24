@@ -75,7 +75,13 @@ void uart_writeByte( uint8_t data )
 void uart_clearScreen()
 {
   uart_writeString("\033c");
+}
 
+void uart_writeRedString(const char * string)
+{
+  uart_writeString("\033[31m");
+  uart_writeString(string);
+  uart_writeString("\033[37m");
 }
 
 uint8_t uart_readByte()

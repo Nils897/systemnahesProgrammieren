@@ -74,3 +74,5 @@ void uart_writeString( const char * string );
 void uart_writeNumber( uint8_t number );
 
 void uart_clearScreen();
+
+void uart_writeRedString();
