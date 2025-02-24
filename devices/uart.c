@@ -72,6 +72,12 @@ void uart_writeByte( uint8_t data )
   // need to "wait" until its transmitted
 }
 
+void uart_clearScreen()
+{
+  uart_writeString("\033c");
+
+}
+
 uint8_t uart_readByte()
 {
 
@@ -96,27 +102,24 @@ uint8_t uart_readByte()
   }
 }
 
-char* uart_readLine()
-{
-  char word[20];
-  for (uint8_t i = 0; i < 20; i += 0)
-  {
+void uart_readLine(char* buffer, uint8_t maxLen) {
+  uint8_t i = 0;
 
+  while (i < maxLen - 1) {
     uint8_t input = uart_readByte();
-    if (input == 13)
-    {
+
+    if (input == 13) {
       uart_writeByte('\n');
       break;
     }
 
-    if (input != 0)
-    {
-      word[i] = input;
+    if (input != 0) {
+      buffer[i] = input;
       i++;
     }
-
   }
-  return word;
+
+  buffer[i] = '\0';
 }
 
 uint8_t uart_readByteBlocking()

@@ -67,6 +67,10 @@ uint8_t uart_readByte();
 
 char* uart_readline();
 
+void uart_readLine(char* buffer, uint8_t maxLen);
+
 void uart_writeString( const char * string );
 
 void uart_writeNumber( uint8_t number );
+
+void uart_clearScreen();
