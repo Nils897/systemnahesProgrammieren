@@ -5,22 +5,24 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
-void hangman();
+uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
-void gameStart();
+void hangmanWin(const char *lines, uint8_t length);
 
-void getUserWord();
+void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter);
 
-void getRandomWord();
+void printResult(uint8_t found, uint8_t *triesLeft);
 
-void makeLinesArray();
-
-void hangmanWin();
+void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8_t *found);
 
 char getGuess();
 
-void printResults();
+void hangman (const char *word, uint8_t length);
 
-void checkGuess();
+void getRandomWord( char *word, uint8_t length );
+
+void getUserWord( char *word, uint8_t length);
+
+void gameStart (void);
 
 #endif //HANGMAN_H

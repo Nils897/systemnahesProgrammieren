@@ -11,8 +11,6 @@ static void randomNumberTest( void );
 
 static void timerTest( void );
 
-void hangman ( void );
-
 int main( void )
 {
   uart_init();
