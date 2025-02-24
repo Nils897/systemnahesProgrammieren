@@ -76,6 +76,7 @@ void hangman (const char *word, const uint8_t length)
     {
       guess = uart_readByte();
     }
+    uart_clearScreen();
     uint8_t found = 0;
     for (uint8_t i = 0; i < length; i++)
     {
@@ -87,8 +88,16 @@ void hangman (const char *word, const uint8_t length)
     }
     if (!found)
     {
-      uart_writeString("\nIncorrect guess.\n");
       triesLeft--;
+      uart_writeString("\nIncorrect guess. Tries left: ");
+      uart_writeByte(triesLeft);
+      uart_writeString("\n");
+    }
+    else
+    {
+      uart_writeString("\nCorrect guess. Tries left: ");
+      uart_writeByte(triesLeft);
+      uart_writeString("\n");
     }
     drawHangman(triesLeft);
     userWon = compareArrays(word, lines, counter);
