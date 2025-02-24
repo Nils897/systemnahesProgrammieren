@@ -13,4 +13,14 @@ void getUserWord();
 
 void getRandomWord();
 
+void makeLinesArray();
+
+void hangmanWin();
+
+char getGuess();
+
+void printResults();
+
+void checkGuess();
+
 #endif //HANGMAN_H
