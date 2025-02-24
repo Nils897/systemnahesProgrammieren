@@ -1,5 +1,6 @@
 #include "../devices/uart.h"
 #include "../devices/random.h"
+#include "drawings.h"
 
 #include <stdlib.h>
 //
@@ -28,10 +29,10 @@ const char* WORDS[] = {
   "zauberer"
 };
 
-uint8_t compareArrays(const char *word, const char *lines, uint8_t length)
+uint8_t compareArrays(const char *word, const char *lines, uint8_t counter)
 {
-  uart_writeString("comparing");
-  for (uint8_t i = 0; i < length; i++)
+  // uart_writeString("comparing");
+  for (uint8_t i = 0; i < counter; i++)
   {
     if (word[i] != lines[i])  // Wenn ein Zeichen unterschiedlich ist
     {
@@ -44,10 +45,13 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t length)
 void hangman (const char *word, const uint8_t length)
 {
   char lines[length];
+  uint8_t counter = 0;
+  uint8_t triesLeft = 11;
   for (uint8_t i = 0; i < length; i++)
   {
     if (word[i] == '\0')
     {
+      counter = i;
       lines[i] = '\0';
       break;
     }
@@ -72,6 +76,7 @@ void hangman (const char *word, const uint8_t length)
     {
       guess = uart_readByte();
     }
+    uart_clearScreen();
     uint8_t found = 0;
     for (uint8_t i = 0; i < length; i++)
     {
@@ -83,10 +88,31 @@ void hangman (const char *word, const uint8_t length)
     }
     if (!found)
     {
-      uart_writeString("\nIncorrect guess.\n");
+      triesLeft--;
+      uart_writeString("\nIncorrect guess. Tries left: ");
+      uart_writeByte(triesLeft);
+      uart_writeString("\n");
     }
-    userWon = compareArrays(word, lines, length);
+    else
+    {
+      uart_writeString("\nCorrect guess. Tries left: ");
+      uart_writeByte(triesLeft);
+      uart_writeString("\n");
+    }
+    drawHangman(triesLeft);
+    userWon = compareArrays(word, lines, counter);
   }
+  uart_writeString("The word is: ");
+  for (uint8_t i = 0; i < length; i++)
+  {
+    if (lines[i] == '\0')
+    {
+      break;
+    }
+    uart_writeByte(lines[i]);  // Gibt das Zeichen (Strich oder später Buchstabe) aus
+    uart_writeString(" ");
+  }
+  uart_writeString("\n");
   uart_writeString("You won!\n");
 }
 
