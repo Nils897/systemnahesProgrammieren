@@ -6,7 +6,9 @@
 #define HANGMAN_TIMER_H
 
 void startTimerForWholeGame(void);
-uint8_t stopTimerForWholeGame(void);
+
+uint32_t stopTimerForWholeGame(void);
+
 void startTimerForTrys(void);
 
 #endif //HANGMAN_TIMER_H

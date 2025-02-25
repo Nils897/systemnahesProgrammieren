@@ -152,8 +152,8 @@ void hangmanWin(const char *lines, uint8_t length)
   }
   uart_writeString("\n");
   uart_writeString("You won!\n");
-  uint8_t valueOfTimer = stopTimerForWholeGame();
-  uart_writeByte( valueOfTimer + '0' );
+  uint32_t valueOfTimer = stopTimerForWholeGame();
+  uart_writeNumber32( valueOfTimer);
 }
 
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter)
@@ -176,13 +176,13 @@ void printResult( const uint8_t found, uint8_t *triesLeft)
   {
     (*triesLeft)--;
     uart_writeString("\nIncorrect guess. Tries left: ");
-    uart_writeByte(*triesLeft);
+    uart_writeNumber(*triesLeft);
     uart_writeString("\n");
   }
   else
   {
     uart_writeString("\nCorrect guess. Tries left: ");
-    uart_writeByte(*triesLeft);
+    uart_writeNumber(*triesLeft);
     uart_writeString("\n");
   }
 }

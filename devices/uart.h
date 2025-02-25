@@ -65,6 +65,8 @@ void uart_writeByte(uint8_t data);
  */
 uint8_t uart_readByte();
 
+void uart_writeNumber32(uint32_t number);
+
 void uart_readLine(char* buffer, uint8_t maxLen);
 
 void uart_writeString( const char * string );
