@@ -9,6 +9,8 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
 void hangmanWin(const char *lines, uint8_t length);
 
+void hangmanLose(const char *word);
+
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter);
 
 void printResult(uint8_t found, uint8_t *triesLeft);

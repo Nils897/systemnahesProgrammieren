@@ -34,6 +34,8 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
 void hangmanWin(const char *lines, uint8_t length);
 
+void hangmanLose(const char *word);
+
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter);
 
 void printResult(uint8_t found, uint8_t *triesLeft);
@@ -48,14 +50,22 @@ void getRandomWord( char *word, uint8_t length );
 
 void getUserWord( char *word, uint8_t length);
 
+void hangmanEnd();
+
 void gameStart (void)
 {
   char choice = 0;
   char word [ 20 ];
   uart_writeString("Welcome to Hangman!\nWhich mode do you like?\n(1) Random word or (2) own word\nYour choice: ");
-  while (choice == 0)
+  while (choice != '1' && choice != '2')
   {
+    if (choice != 0)
+    {
+      uart_writeString("\nInvalid choice!\n");
+      uart_writeString("Your choice: ");
+    }
     choice = uart_readByte();
+
   }
   if (choice == '1') // ASCII 1 = 49
   {
@@ -67,10 +77,6 @@ void gameStart (void)
   {
     getUserWord(word, sizeof(word));
     hangman(word, sizeof(word));
-  }
-  else
-  {
-    uart_writeString("Invalid choice!\n");
   }
 }
 
@@ -100,9 +106,17 @@ void hangman (const char *word, const uint8_t length)
     checkGuess(word, lines, guess, length, &found);
     printResult(found, &triesLeft);
     drawHangman(triesLeft);
+    if (triesLeft == 0)
+    {
+      hangmanLose(word);
+      break;
+    }
     userWon = compareArrays(word, lines, counter);
   }
-  hangmanWin(lines, length);
+  if (triesLeft != 0)
+  {
+    hangmanWin(lines, length);
+  }
 }
 
 void getUserWord( char *word, uint8_t length)
@@ -137,6 +151,12 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t counter)
   }
   return 1;  // Rückgabe 1 bedeutet, die Arrays sind gleich
 }
+void hangmanLose(const char *word)
+{
+  uart_writeString("You lost! Your word was: ");
+  uart_writeString(word);
+  hangmanEnd();
+}
 
 void hangmanWin(const char *lines, uint8_t length)
 {
@@ -154,6 +174,7 @@ void hangmanWin(const char *lines, uint8_t length)
   uart_writeString("You won!\n");
   uint32_t valueOfTimer = stopTimerForWholeGame();
   uart_writeNumber32( valueOfTimer);
+  hangmanEnd();
 }
 
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter)
@@ -207,4 +228,24 @@ char getGuess()
     guess = uart_readByte();
   }
   return guess;
+}
+
+void hangmanEnd(void)
+{
+  uart_writeString("\n\n");
+  uart_writeString("(1) Play again or (2) Exit");
+  char choice = 0;
+  while (choice == 0)
+  {
+    choice = uart_readByte();
+  }
+  if (choice == '1')
+  {
+    uart_clearScreen();
+    gameStart();
+  }
+  else if (choice == '2')
+  {
+    uart_writeString("\nGoodbye!\n\n");
+  }
 }
