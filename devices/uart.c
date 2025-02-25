@@ -160,9 +160,18 @@ void uart_writeString( const char * string )
 void uart_writeNumber( uint8_t number )
 {
   uint16_t reversedNumber = 0;
+
+  uint8_t endingZeros = 0;
   while (number > 9)
   {
-    reversedNumber += number % 10;
+    if (number % 10 == 0)
+    {
+      endingZeros++;
+    }
+    else
+    {
+      reversedNumber += number % 10;
+    }
     number /= 10;
     reversedNumber*=10;
   }
@@ -173,14 +182,27 @@ void uart_writeNumber( uint8_t number )
     reversedNumber /= 10;
   }
   uart_writeByte((reversedNumber % 10) + '0');
+  for (int i = 0; i < endingZeros; i++)
+  {
+    uart_writeByte('0');
+  }
 }
 
 void uart_writeNumber32( uint32_t number )
 {
   uint32_t reversedNumber = 0;
+
+  uint8_t endingZeros = 0;
   while (number > 9)
   {
-    reversedNumber += number % 10;
+    if (number % 10 == 0)
+    {
+      endingZeros++;
+    }
+    else
+    {
+      reversedNumber += number % 10;
+    }
     number /= 10;
     reversedNumber*=10;
   }
@@ -191,4 +213,8 @@ void uart_writeNumber32( uint32_t number )
     reversedNumber /= 10;
   }
   uart_writeByte((reversedNumber % 10) + '0');
+  for (int i = 0; i < endingZeros; i++)
+  {
+    uart_writeByte('0');
+  };
 }
