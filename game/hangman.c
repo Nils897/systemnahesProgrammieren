@@ -105,7 +105,7 @@ void hangman (const char *word, const uint8_t length)
 
 void getUserWord( char *word, uint8_t length)
 {
-
+  uart_readLine(word, length);
 }
 
 void getRandomWord( char *word, const uint8_t length )

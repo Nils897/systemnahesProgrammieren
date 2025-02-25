@@ -110,9 +110,10 @@ uint8_t uart_readByte()
 
 void uart_readLine(char* buffer, uint8_t maxLen) {
   uint8_t i = 0;
-
+  uart_writeString("\nEnter your word: ");
   while (i < maxLen - 1) {
-    uint8_t input = uart_readByte();
+    uint8_t input = 0;
+    input = uart_readByte();
 
     if (input == 13) {
       uart_writeByte('\n');
@@ -120,8 +121,15 @@ void uart_readLine(char* buffer, uint8_t maxLen) {
     }
 
     if (input != 0) {
-      buffer[i] = input;
-      i++;
+      if (input >= 97 && input <= 122)
+      {
+        buffer[i] = input;
+        i++;
+      }
+      else
+      {
+        uart_writeString("\nInvalid character. (Use ss instead of ß | ue for ü | ae for ä | oe for ö)\nType next character: ");
+      }
     }
   }
 
