@@ -159,5 +159,18 @@ void uart_writeString( const char * string )
 
 void uart_writeNumber( uint8_t number )
 {
-  (void)number;
+  uint16_t reversedNumber = 0;
+  while (number > 9)
+  {
+    reversedNumber += number % 10;
+    number /= 10;
+    reversedNumber*=10;
+  }
+  reversedNumber += number % 10;
+  while (reversedNumber > 9)
+  {
+    uart_writeByte((reversedNumber % 10) + '0');
+    reversedNumber /= 10;
+  }
+  uart_writeByte((reversedNumber % 10) + '0');
 }
