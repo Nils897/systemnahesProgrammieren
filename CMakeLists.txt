@@ -19,6 +19,8 @@ target_sources(
     main.c
         game/drawings.c
         game/drawings.h
+        game/hangman_timer.c
+        game/hangman_timer.h
     devices/register_access.h
     devices/register_access.c
     devices/random.h

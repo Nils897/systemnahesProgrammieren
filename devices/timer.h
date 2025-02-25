@@ -85,6 +85,37 @@ typedef enum TimerCaptureCompare {
 #define INT_COMPARE2  (1 << 18)  // Enable/Disable Interrupt on COMPARE[2] event
 #define INT_COMPARE3  (1 << 19)  // Enable/Disable Interrupt on COMPARE[3] event
 
+static const uint32_t TimerBase[3] =
+{
+  TIMER0_BASE_ADDRESS,
+  TIMER1_BASE_ADDRESS,
+  TIMER2_BASE_ADDRESS
+};
+
+static const uint32_t TimerCCOffset[4] =
+{
+  TIMER_CC_0,
+  TIMER_CC_1,
+  TIMER_CC_2,
+  TIMER_CC_3,
+};
+
+static const uint32_t TimerCompareEventOffset[4] =
+{
+  TIMER_COMPARE_0,
+  TIMER_COMPARE_1,
+  TIMER_COMPARE_2,
+  TIMER_COMPARE_3
+};
+
+static const uint32_t TimerCaptureTaskOffset[4] =
+{
+  TIMER_CAPTURE_0,
+  TIMER_CAPTURE_1,
+  TIMER_CAPTURE_2,
+  TIMER_CAPTURE_3
+};
+
 // C Function Definitions -----------------------------------------------------
 
 /**

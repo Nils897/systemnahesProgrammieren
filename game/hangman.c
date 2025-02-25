@@ -1,8 +1,9 @@
 #include "../devices/uart.h"
 #include "../devices/random.h"
 #include "drawings.h"
+#include "hangman_timer.h"
 
-#include <stdlib.h>
+#include <stdint.h>
 //
 // Created by Nils on 18.02.25.
 //
@@ -59,6 +60,7 @@ void gameStart (void)
   if (choice == '1') // ASCII 1 = 49
   {
     getRandomWord(word, sizeof(word));
+    startTimerForWholeGame();
     hangman(word, sizeof(word));
   }
   else if (choice == '2') // ASCII 2 = 50
@@ -150,6 +152,8 @@ void hangmanWin(const char *lines, uint8_t length)
   }
   uart_writeString("\n");
   uart_writeString("You won!\n");
+  uint8_t valueOfTimer = stopTimerForWholeGame();
+  uart_writeByte( valueOfTimer + '0' );
 }
 
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter)
