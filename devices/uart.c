@@ -164,7 +164,7 @@ void uart_writeNumber( uint8_t number )
   uint8_t endingZeros = 0;
   while (number > 9)
   {
-    if (number % 10 == 0)
+    if (number % 10 == 0 && reversedNumber == 0)
     {
       endingZeros++;
     }
@@ -195,7 +195,7 @@ void uart_writeNumber32( uint32_t number )
   uint8_t endingZeros = 0;
   while (number > 9)
   {
-    if (number % 10 == 0)
+    if (number % 10 == 0 && reversedNumber == 0)
     {
       endingZeros++;
     }
