@@ -141,7 +141,8 @@ void timer_init_detailed(
   Timer timer,
   uint8_t prescaler,
   TimerMode mode,
-  TimerBitMode bitMode );
+  TimerBitMode bitMode,
+  bool interrupt );
 
 /**
  * @brief Set the Capture/ Compare Register of the Timer.

@@ -17,15 +17,15 @@ void Interrupt8_Handler(void)
   uart_writeString( ".\n");
 }
 
-void timer_init( Timer const timer )
+/*void timer_init( Timer const timer )
 {
   // Init Timer with an interval of ~4sek
   timer_init_detailed( timer, 15, TIMER_MODE_TIMER, TIMER_BIT_MODE_32 );
-  timer_captureCompareSet( timer, CC0, 1953, true );
+  timer_captureCompareSet( timer, CC0, 500, true );
   timer_start( timer );
-}
+}*/
 
-void timer_init_detailed( Timer const timer, uint8_t const prescaler, TimerMode const mode, TimerBitMode const bitMode )
+void timer_init_detailed( Timer const timer, uint8_t const prescaler, TimerMode const mode, TimerBitMode const bitMode, bool interrupt )
 {
   const uint32_t timerBase = TimerBase[ timer ];
   // Instance[0] of the Timer uses Peripheral ID: 8
@@ -36,14 +36,15 @@ void timer_init_detailed( Timer const timer, uint8_t const prescaler, TimerMode 
   // BitMode
   register_write(timerBase | TIMER_BITMODE , (uint32_t)bitMode );
 
-#if 1
+if ( interrupt == true )
+{
   // Enable Interrupt
-  //register_write((TIMER0_BASE_ADDRESS | TIMER_INTENSET), INT_COMPARE0 ); // Interrupt on Compare[0]
+  register_write((TIMER0_BASE_ADDRESS | TIMER_INTENSET), INT_COMPARE0 ); // Interrupt on Compare[0]
 
   // Enable User-Interrupt from Cortex-M0
   // ID8 ist der Timer0
-  //register_write( Interrupt_Set_Enable, Interrupt_ID8 );
-#endif
+  register_write( Interrupt_Set_Enable, Interrupt_ID8 );
+}
 }
 
 void timer_captureCompareSet( Timer timer, TimerCaptureCompare captureCompare, uint32_t value, bool shortcutClear )

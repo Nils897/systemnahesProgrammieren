@@ -5,6 +5,8 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
+#include <stdint.h>
+
 uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
 void hangmanWin(const char *lines, uint8_t length);
@@ -20,6 +22,8 @@ void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8
 char getGuess();
 
 void hangman (const char *word, uint8_t length);
+
+void stopTimerForTrysAndAddSums(void);
 
 void getRandomWord( char *word, uint8_t length );
 

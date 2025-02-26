@@ -1,9 +1,11 @@
+#include <stdint.h>
 #include "../devices/uart.h"
 #include "../devices/random.h"
 #include "drawings.h"
 #include "hangman_timer.h"
+#include "../devices/timer.h"
 
-#include <stdint.h>
+
 //
 // Created by Nils on 18.02.25.
 //
@@ -29,6 +31,8 @@ const char* WORDS[] = {
   "schnecke",
   "zauberer"
 };
+uint32_t sumOfTimesOfTrys = 0;
+uint32_t sumOfTrys = 0;
 
 uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
@@ -45,6 +49,8 @@ void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8
 char getGuess();
 
 void hangman (const char *word, uint8_t length);
+
+void stopTimerForTrysAndAddSums(void);
 
 void getRandomWord( char *word, uint8_t length );
 
@@ -71,6 +77,7 @@ void gameStart (void)
   {
     getRandomWord(word, sizeof(word));
     startTimerForWholeGame();
+    startTimerForTrys();
     hangman(word, sizeof(word));
   }
   else if (choice == '2') // ASCII 2 = 50
@@ -101,7 +108,9 @@ void hangman (const char *word, const uint8_t length)
     }
     uart_writeString("\n");
     char guess = getGuess();
+    stopTimerForTrysAndAddSums();
     uart_clearScreen();
+    startTimerForTrys();
     uint8_t found = 0;
     checkGuess(word, lines, guess, length, &found);
     printResult(found, &triesLeft);
@@ -117,6 +126,12 @@ void hangman (const char *word, const uint8_t length)
   {
     hangmanWin(lines, length);
   }
+}
+
+void stopTimerForTrysAndAddSums() {
+  uint32_t timeOfTry = stopTimerForTrys();
+  sumOfTimesOfTrys += timeOfTry;
+  sumOfTrys ++;
 }
 
 void getUserWord( char *word, uint8_t length)
@@ -172,8 +187,9 @@ void hangmanWin(const char *lines, uint8_t length)
   }
   uart_writeString("\n");
   uart_writeString("You won!\n");
-  uint32_t valueOfTimer = stopTimerForWholeGame();
-  uart_writeNumber32( valueOfTimer);
+  uint32_t valueOfTimerForWholeGame = stopTimerForWholeGame();
+  stopTimerForTrysAndAddSums();
+  promtTimeStatistics( valueOfTimerForWholeGame, sumOfTimesOfTrys, sumOfTrys );
   hangmanEnd();
 }
 
