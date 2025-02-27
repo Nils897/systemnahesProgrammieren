@@ -3,28 +3,113 @@
 
 #include <stdint.h>
 
+/**
+ * @brief Compares two char-Arrays (equal or  not)
+ *
+ * @param word char-Array which contains the word to guess
+ *
+ * @param lines: char-Array which contains the guesses of the user
+ *
+ * @param counter which holds the index where "\0" is in word
+ *
+ * @return uint_8 value which is 0 when not equal and 1 when equal
+ */
 uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
+
+/**
+ * @brief Winning-Screen if the user won the hangman game
+ *
+ * @param lines a char-Array which is the guessed word
+ *
+ * @param length for printing the word via for-loop
+ */
 void hangmanWin(const char *lines, uint8_t length);
 
+
+/**
+ * @brief Losing-Screen if the user lost the hangman game
+ *
+ * @param word is a char-Array which contains the word the user couldn't guess
+ */
 void hangmanLose(const char *word);
 
+
+/**
+ * @brief Writes as many "_" as there are characters in word
+ *
+ * @param word: char-Array which contains the word to guess
+ *
+ * @param lines: char-Array which contains the user guesses so at first only "_"
+ *
+ * @param length: number which holds the length of word to iterate over word
+ *
+ * @param counter: number which gets the index of "\0" in the word/lines char-Array
+ */
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter);
 
+
+/**
+ * @brief Prints the result of the user guess on the terminal
+ *
+ * @param found: number which contains if the guessed character is right (found = 1) or wrong (found = 0)
+ *
+ * @param triesLeft: number which contains the tries the user has left to guess to word correctly
+ */
 void printResult(uint8_t found, uint8_t *triesLeft);
 
+
+/**
+ * @brief
+ *
+ * @params
+ */
 void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8_t *found);
 
+
+/**
+ * @brief
+ *
+ * @return
+ */
 char getGuess();
 
+
+/**
+ * @brief
+ *
+ * @params
+ */
 void hangman (const char *word, uint8_t length);
 
+
+/**
+ * @brief
+ */
 void stopTimerForTrysAndAddSums(void);
 
+
+/**
+ * @brief Gets a random word found in the word-list
+ *
+ * @param
+ */
 void getRandomWord( char *word, uint8_t length );
 
+
+/**
+ * @brief Gets a word by an user via terminal input
+ *
+ * @param word: char-Array which holds the word
+ *
+ * @param length: number which contains the length of the word
+ */
 void getUserWord( char *word, uint8_t length);
 
+
+/**
+ * @brief Starts the main-function of the hangman game
+ */
 void gameStart (void);
 
 #endif //HANGMAN_H

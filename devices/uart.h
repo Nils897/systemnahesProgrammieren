@@ -65,14 +65,48 @@ void uart_writeByte(uint8_t data);
  */
 uint8_t uart_readByte();
 
+/**
+ * @brief Write an uint32_t number on the terminal
+ *
+ * @param number (uint32_t) to write on terminal
+ */
 void uart_writeNumber32(uint32_t number);
 
+
+/**
+ * @brief Reads the whole line on the terminal for User Input
+ *
+ * @param buffer to hold the User Input
+ *
+ * @param maxLen for max amount of characters read by the function
+ */
 void uart_readLine(char* buffer, uint8_t maxLen);
 
+/**
+ * @brief Writes a string on the terminal
+ *
+ * @param string as char pointer
+ */
 void uart_writeString( const char * string );
 
+
+/**
+ * @brief Writes a uint8_t number on the terminal
+ *
+ * @param number (uint8_t) to write on terminal
+ */
 void uart_writeNumber( uint8_t number );
 
+
+/**
+ * @brief Clears the terminal-screen
+ */
 void uart_clearScreen();
 
-void uart_writeRedString();
+
+/**
+ * @brief Writes a string on the terminal in the color red
+ *
+ * @param string as char pointer
+ */
+void uart_writeRedString(const char * string);
