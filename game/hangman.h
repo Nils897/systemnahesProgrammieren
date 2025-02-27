@@ -60,25 +60,35 @@ void printResult(uint8_t found, uint8_t *triesLeft);
 
 
 /**
- * @brief
+ * @brief Checks if the guess from the user is correct or incorrect
  *
- * @params
+ * @param word: Contains the word to guess
+ *
+ * @param lines: Contains the state of the user guessed word
+ *
+ * @param guess: Contains the guess of the user
+ *
+ * @param length: Contains the length of the word to guess
+ *
+ * @param found: gets assigned depending on the correction of the guess (found = 1 for right and found = 0 for wrong)
  */
 void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8_t *found);
 
 
 /**
- * @brief
+ * @brief Gets the users next guess
  *
- * @return
+ * @return character which the user guessed
  */
 char getGuess();
 
 
 /**
- * @brief
+ * @brief Holds the main-logic of the hangman game
  *
- * @params
+ * @param word: Contains the word to guess
+ *
+ * @param length: Contains the length of the word to guess
  */
 void hangman (const char *word, uint8_t length);
 
@@ -90,9 +100,11 @@ void stopTimerForTrysAndAddSums(void);
 
 
 /**
- * @brief Gets a random word found in the word-list
+ * @brief Gets a random word of the word-list
  *
- * @param
+ * @param word: Gets assigned to the random word in this function
+ *
+ * @param length: Holds the length of the word
  */
 void getRandomWord( char *word, uint8_t length );
 
