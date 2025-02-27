@@ -3,12 +3,7 @@
 #include "../devices/random.h"
 #include "drawings.h"
 #include "hangman_timer.h"
-#include "../devices/timer.h"
 
-
-//
-// Created by Nils on 18.02.25.
-//
 const char* WORDS[] = {
   "lampe",
   "giraffe",
@@ -31,6 +26,7 @@ const char* WORDS[] = {
   "schnecke",
   "zauberer"
 };
+
 uint32_t sumOfTimesOfTrys = 0;
 uint32_t sumOfTrys = 0;
 
@@ -73,14 +69,14 @@ void gameStart (void)
     choice = uart_readByte();
 
   }
-  if (choice == '1') // ASCII 1 = 49
+  if (choice == '1')
   {
     getRandomWord(word, sizeof(word));
     startTimerForWholeGame();
     startTimerForTrys();
     hangman(word, sizeof(word));
   }
-  else if (choice == '2') // ASCII 2 = 50
+  else if (choice == '2')
   {
     getUserWord(word, sizeof(word));
     hangman(word, sizeof(word));
@@ -103,7 +99,7 @@ void hangman (const char *word, const uint8_t length)
       {
         break;
       }
-      uart_writeByte(lines[i]);  // Gibt das Zeichen (Strich oder später Buchstabe) aus
+      uart_writeByte(lines[i]);
       uart_writeString(" ");
     }
     uart_writeString("\n");
@@ -149,22 +145,21 @@ void getRandomWord( char *word, const uint8_t length )
     word[i] = WORDS[randIndex][i];
     i++;
   }
-  word[i] = '\0';  // Nullterminierung sicherstellen
+  word[i] = '\0';
   uart_writeString("\nWord: ");
   uart_writeString(word);
 }
 
 uint8_t compareArrays(const char *word, const char *lines, uint8_t counter)
 {
-  // uart_writeString("comparing");
   for (uint8_t i = 0; i < counter; i++)
   {
-    if (word[i] != lines[i])  // Wenn ein Zeichen unterschiedlich ist
+    if (word[i] != lines[i])
     {
-      return 0;  // Rückgabe 0 bedeutet, die Arrays sind nicht gleich
+      return 0;
     }
   }
-  return 1;  // Rückgabe 1 bedeutet, die Arrays sind gleich
+  return 1;
 }
 void hangmanLose(const char *word)
 {
@@ -182,7 +177,7 @@ void hangmanWin(const char *lines, uint8_t length)
     {
       break;
     }
-    uart_writeByte(lines[i]);  // Gibt das Zeichen (Strich oder später Buchstabe) aus
+    uart_writeByte(lines[i]);
     uart_writeString(" ");
   }
   uart_writeString("\n");
@@ -230,7 +225,7 @@ void checkGuess(const char *word, char *lines, const char guess, const uint8_t l
   {
     if (word[i] == guess)
     {
-      lines[i] = guess;  // Buchstabe ersetzen
+      lines[i] = guess;
       *found = 1;
     }
   }

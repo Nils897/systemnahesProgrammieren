@@ -1,18 +1,15 @@
-//
-// Created by liger on 24.02.2025.
-//
-
 #ifndef HANGMAN_TIMER_H
 #define HANGMAN_TIMER_H
 
 #include <stdint.h>
-#include <stdbool.h>
 
 void startTimerForWholeGame(void);
 
 uint32_t stopTimerForWholeGame(void);
 
 void startTimerForTrys(void);
+
+uint32_t stopTimerForTrys();
 
 uint32_t changeTimerValueToSeconds ( uint32_t value );
 

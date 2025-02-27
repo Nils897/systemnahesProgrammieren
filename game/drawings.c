@@ -1,12 +1,7 @@
-//
-// Created by jlotw on 10.02.2025.
-//
-
 #include "../devices/uart.h"
 
 void drawHangman(uint8_t triesLeft)
 {
-  // Draw the Hangman
   switch (triesLeft)
   {
     case 0:
@@ -129,5 +124,7 @@ void drawHangman(uint8_t triesLeft)
       uart_writeString("  \n");
       uart_writeString("  \n");
       break;
+    default:
+      uart_writeString("TriesLeft not in valid interval\n");
   }
 }
