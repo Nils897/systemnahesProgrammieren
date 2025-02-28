@@ -128,7 +128,7 @@ void uart_readLine(char* buffer, uint8_t maxLen) {
       }
       else
       {
-        uart_writeString("\nInvalid character. (Use ss instead of ß | ue for ü | ae for ä | oe for ö)\nType next character: ");
+        uart_writeString("\nInvalid character. (Use lower case characters | ss instead of ß | ue for ü | ae for ä | oe for ö)\nType next character: ");
       }
     }
   }
