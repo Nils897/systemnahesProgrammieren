@@ -246,7 +246,7 @@ void hangmanEnd(void)
   uart_writeString("\n\n");
   uart_writeString("(1) Play again or (2) Exit");
   char choice = 0;
-  while (choice == 0)
+  while (choice == 0 && choice != '1' && choice != '2')
   {
     choice = uart_readByte();
   }
