@@ -124,4 +124,14 @@ void getUserWord( char *word, uint8_t length);
  */
 void gameStart (void);
 
+/**
+ * @brief Creates a Heading and clears the terminal before
+ */
+void hangmanHeading (void);
+
+/**
+ * @brief Creates a Footer with the names of the contributors
+ */
+void hangmanFooter(void);
+
 #endif //HANGMAN_H

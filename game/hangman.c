@@ -54,8 +54,13 @@ void getUserWord( char *word, uint8_t length);
 
 void hangmanEnd();
 
+void hangmanHeading();
+
+void hangmanFooter();
+
 void gameStart (void)
 {
+  hangmanHeading();
   char choice = 0;
   char word [ 20 ];
   uart_writeString("Welcome to Hangman!\nWhich mode do you like?\n(1) Random word or (2) own word\nYour choice: ");
@@ -103,9 +108,10 @@ void hangman (const char *word, const uint8_t length)
       uart_writeString(" ");
     }
     uart_writeString("\n");
+    hangmanFooter();
     char guess = getGuess();
     stopTimerForTrysAndAddSums();
-    uart_clearScreen();
+    hangmanHeading();
     startTimerForTrys();
     uint8_t found = checkGuess(word, lines, guess, length);
     printResult(found, &triesLeft);
@@ -206,7 +212,7 @@ void printResult( const uint8_t found, uint8_t *triesLeft)
   if (!found)
   {
     (*triesLeft)--;
-    uart_writeString("\nIncorrect guess. Tries left: ");
+    uart_writeString("\nIncorrect guess.\n(Use lower case characters | ss instead of ß | ue for ü | ae for ä | oe for ö)\nTries left: ");
     uart_writeNumber(*triesLeft);
     uart_writeString("\n");
   }
@@ -227,9 +233,9 @@ uint8_t checkGuess(const char *word, char *lines, const char guess, const uint8_
       return 0;
     }
   }
+  uint8_t found = 0;
   for (uint8_t i = 0; i < length; i++)
   {
-    uint8_t found = 0;
     if (word[i] == guess)
     {
       lines[i] = guess;
@@ -256,7 +262,7 @@ char getGuess()
 void hangmanEnd(void)
 {
   uart_writeString("\n\n");
-  uart_writeString("(1) Play again or (2) Exit");
+  uart_writeString("(1) Play again or (2) Exit\nYour choice: ");
   char choice = 0;
   while (choice == 0 && choice != '1' && choice != '2')
   {
@@ -269,6 +275,22 @@ void hangmanEnd(void)
   }
   else if (choice == '2')
   {
-    uart_writeString("\nGoodbye!\n\n");
+    uart_writeString("\nGoodbye!\n");
+    uart_writeString("('STR + A' and then 'X' will terminate qemu)\n\n");
   }
+}
+
+void hangmanHeading()
+{
+  uart_clearScreen();
+  uart_writeRedString("*---------------------------------------------------------------------------------*\n");
+  uart_writeRedString("*---------------------------------- Hangman Game ---------------------------------*\n");
+  uart_writeRedString("*---------------------------------------------------------------------------------*\n\n");
+}
+
+void hangmanFooter()
+{
+  uart_writeRedString("\n*---------------------------------------------------------------------------------*\n");
+  uart_writeRedString  ("*--- Created by Janne Nußbaum, Justin Lotwin, Linus Gerlach and Nils Fleschhut ---*\n");
+  uart_writeRedString  ("*---------------------------------------------------------------------------------*\n\n");
 }
