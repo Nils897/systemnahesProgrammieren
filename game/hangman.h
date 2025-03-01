@@ -22,17 +22,21 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
  *
  * @param lines a char-Array which is the guessed word
  *
- * @param length for printing the word via for-loop
+ * @param counter for calculating the total guesses the user made
+ *
+ * @param triesLeft for calculating the total guesses of the user
  */
-void hangmanWin(const char *lines, uint8_t length);
+void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft);
 
 
 /**
  * @brief Losing-Screen if the user lost the hangman game
  *
  * @param word is a char-Array which contains the word the user couldn't guess
+ *
+ * @param rightGuesses is a number which contains the amount of right guesses the user made
  */
-void hangmanLose(const char *word);
+void hangmanLose(const char *word, uint8_t rightGuesses);
 
 
 /**
