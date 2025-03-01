@@ -38,9 +38,9 @@ void hangmanLose(const char *word);
 
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter);
 
-void printResult(uint8_t found, uint8_t *triesLeft);
+void printResult( uint8_t found, uint8_t *triesLeft );
 
-void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8_t *found);
+uint8_t checkGuess( const char *word, char *lines, char guess, uint8_t length );
 
 char getGuess();
 
@@ -107,8 +107,7 @@ void hangman (const char *word, const uint8_t length)
     stopTimerForTrysAndAddSums();
     uart_clearScreen();
     startTimerForTrys();
-    uint8_t found = 0;
-    checkGuess(word, lines, guess, length, &found);
+    uint8_t found = checkGuess(word, lines, guess, length);
     printResult(found, &triesLeft);
     drawHangman(triesLeft);
     if (triesLeft == 0)
@@ -219,16 +218,29 @@ void printResult( const uint8_t found, uint8_t *triesLeft)
   }
 }
 
-void checkGuess(const char *word, char *lines, const char guess, const uint8_t length, uint8_t *found)
+uint8_t checkGuess(const char *word, char *lines, const char guess, const uint8_t length)
 {
   for (uint8_t i = 0; i < length; i++)
   {
+    if (guess == lines[i])
+    {
+      return 0;
+    }
+  }
+  for (uint8_t i = 0; i < length; i++)
+  {
+    uint8_t found = 0;
     if (word[i] == guess)
     {
       lines[i] = guess;
-      *found = 1;
+      found = 1;
+    }
+    if (i == length - 1 && found == 1)
+    {
+      return 1;
     }
   }
+  return 0;
 }
 
 char getGuess()

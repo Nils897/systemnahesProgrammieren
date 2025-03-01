@@ -70,9 +70,9 @@ void printResult(uint8_t found, uint8_t *triesLeft);
  *
  * @param length: Contains the length of the word to guess
  *
- * @param found: gets assigned depending on the correction of the guess (found = 1 for right and found = 0 for wrong)
+ * @return found: gets assigned depending on the correction of the guess (found = 1 for right and found = 0 for wrong)
  */
-void checkGuess(const char *word, char *lines, char guess, uint8_t length, uint8_t *found);
+uint8_t checkGuess(const char *word, char *lines, char guess, uint8_t length);
 
 
 /**
