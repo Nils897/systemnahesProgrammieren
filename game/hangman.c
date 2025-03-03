@@ -84,6 +84,7 @@ void gameStart (void)
   else if (choice == '2')
   {
     getUserWord(word, sizeof(word));
+    startTimerForWholeGame();
     hangman(word, sizeof(word));
   }
 }
