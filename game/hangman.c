@@ -159,7 +159,7 @@ void getRandomWord( char *word, const uint8_t length )
     i++;
   }
   word[i] = '\0';
-  uart_writeString("\nWord: ");
+  uart_writeString("\nDebug: Word: ");
   uart_writeString(word);
 }
 
