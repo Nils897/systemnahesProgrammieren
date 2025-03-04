@@ -112,3 +112,14 @@ die qemu-Instanz (neu) zu *starten* und gdb zu starten hinzugefügt.
 Nach Änderungen am Code muss das CMake Projekt neugebaut und die qemu-Instanz neugestartet werden.
 
 ## 2. Projekt
+
+### Starten des Spiels
+Da das Spiel mit User Input funkioniert, muss man das Projekt in der Shell starten. Am einfachsten ist es ein kleines "runHangman-Skript" zu machen. Befolgen sie hierzu folgende Schritte:
+1. Gehen Sie mit cd in das directory in dem sie das Skript haben wollen
+2. Erstellen der Datei mit: `touch runHangman`
+3. Bearbeiten der Datei mit: `vi runHangman` (oder vim oder nano etc.)
+4. In der Datei schreiben sie einfach untereinander folgendes:
+
+   `cd Path/to/your/build/directory`
+
+   `cmake --build --preset arm-cortex-m0-unix` bzw. `cmake --build --preset arm-cortex-m0-mingw`

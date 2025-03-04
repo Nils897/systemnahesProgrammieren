@@ -144,6 +144,8 @@ void stopTimerForTrysAndAddSums() {
 void getUserWord( char *word, uint8_t length)
 {
   uart_readLine(word, length);
+  uart_clearScreen();
+  hangmanHeading();
 }
 
 void getRandomWord( char *word, const uint8_t length )
