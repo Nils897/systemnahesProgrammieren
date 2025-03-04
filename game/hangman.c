@@ -58,7 +58,7 @@ void hangmanHeading();
 
 void hangmanFooter();
 
-void gameStart (void) // NOLINT(*-no-recursion)
+void gameStart (void)
 {
   hangmanHeading();
   char choice = 0;
@@ -89,14 +89,14 @@ void gameStart (void) // NOLINT(*-no-recursion)
   }
 }
 
-void hangman (const char *word, const uint8_t length) // NOLINT(*-no-recursion)
+void hangman (const char *word, const uint8_t length)
 {
   char lines[length];
   uint8_t counter = 0;
   uint8_t triesLeft = 11;
-  makeLinesArray(word, lines, length, &counter);
   uint8_t userWon = 0;
   uint8_t rightGuesses = 0;
+  makeLinesArray(word, lines, length, &counter);
   while (userWon == 0)
   {
     uart_writeString("\nWord to guess:   ");
@@ -174,7 +174,7 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t counter)
   }
   return 1;
 }
-void hangmanLose(const char *word, uint8_t rightGuesses) // NOLINT(*-no-recursion)
+void hangmanLose(const char *word, uint8_t rightGuesses)
 {
   uart_writeString("You lost! Your word was: ");
   uart_writeString(word);
@@ -192,7 +192,7 @@ void hangmanLose(const char *word, uint8_t rightGuesses) // NOLINT(*-no-recursio
   hangmanEnd();
 }
 
-void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft) // NOLINT(*-no-recursion)
+void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft)
 {
   uart_writeString("The word is: ");
   uart_writeString(lines);
@@ -277,7 +277,7 @@ char getGuess()
   return guess;
 }
 
-void hangmanEnd(void) // NOLINT(*-no-recursion)
+void hangmanEnd(void)
 {
   uart_writeString("\n\n");
   uart_writeString("(1) Play again or (2) Exit\nYour choice: ");
