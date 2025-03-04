@@ -75,9 +75,7 @@ uint32_t averageAnswerTime( uint32_t sumOfTimesOfTries, uint32_t sumOfTries );
  * @brief
  *
  * @params
- *
- * @return
  */
-uint32_t promtTimeStatistics ( uint32_t timeOfWholeGame, uint32_t sumOfTimesOfTries, uint32_t sumOfTries );
+void promtTimeStatistics ( uint32_t timeOfWholeGame, uint32_t sumOfTimesOfTries, uint32_t sumOfTries );
 
 #endif //HANGMAN_TIMER_H

@@ -114,7 +114,7 @@ void getRandomWord( char *word, uint8_t length );
 
 
 /**
- * @brief Gets a word by an user via terminal input
+ * @brief Gets a word by a user via terminal input
  *
  * @param word: char-Array which holds the word
  *

@@ -44,7 +44,7 @@ uint32_t averageAnswerTime( uint32_t sumOfTimesOfTrys, uint32_t sumOfTrys ) {
   return average;
 }
 
-uint32_t promtTimeStatistics ( uint32_t timeOfWholeGame, uint32_t sumOfTimesOfTrys, uint32_t sumOfTrys ) {
+void promtTimeStatistics ( uint32_t timeOfWholeGame, uint32_t sumOfTimesOfTrys, uint32_t sumOfTrys ) {
   uint32_t secondsOfWholeGame = changeTimerValueToSeconds ( timeOfWholeGame );
   uint32_t millisecondsOfWholeGame = changeTimerValueToMilliseconds ( timeOfWholeGame );
   uint32_t _averageAnswerTime = averageAnswerTime ( sumOfTimesOfTrys, sumOfTrys );
