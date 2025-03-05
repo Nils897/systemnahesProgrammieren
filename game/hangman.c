@@ -27,6 +27,76 @@ const char* WORDS[] = {
   "zauberer"
 };
 
+const char* EASY_WORDS[] = {
+  "apple",
+  "house",
+  "chair",
+  "cloud",
+  "bread",
+  "water",
+  "train",
+  "mouse",
+  "happy",
+  "table",
+  "plant",
+  "light",
+  "shirt",
+  "music",
+  "smile",
+  "river",
+  "pencil",
+  "beach",
+  "pillow",
+  "window"
+};
+
+const char* MEDIUM_WORDS[] = {
+  "giraffe",
+  "blanket",
+  "painter",
+  "battery",
+  "monster",
+  "diamond",
+  "whisper",
+  "chimney",
+  "fortune",
+  "lantern",
+  "journey",
+  "tunnel",
+  "pudding",
+  "curtain",
+  "goblin",
+  "captain",
+  "silence",
+  "zeppelin",
+  "twinkle",
+  "firefly"
+};
+
+const char* HARD_WORDS[] = {
+  "labyrinth",
+  "blueprint",
+  "nightmare",
+  "encyclopedia",
+  "marshmallow",
+  "wristwatch",
+  "microscope",
+  "phenomenon",
+  "psychology",
+  "tournament",
+  "handkerchief",
+  "moonlight",
+  "lightning",
+  "blacksmith",
+  "wilderness",
+  "hologram",
+  "adventure",
+  "chocolate",
+  "volunteer",
+  "quicksilver"
+};
+
+
 uint32_t sumOfTimesOfTrys = 0;
 uint32_t sumOfTrys = 0;
 
