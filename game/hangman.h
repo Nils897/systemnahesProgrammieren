@@ -109,8 +109,10 @@ void stopTimerForTrysAndAddSums(void);
  * @param word: Gets assigned to the random word in this function
  *
  * @param length: Holds the length of the word
+ *
+ * @param decision: Holds the users decision for the game difficulty
  */
-void getRandomWord( char *word, uint8_t length );
+void getRandomWord( char *word, uint8_t length, char decision );
 
 
 /**
@@ -137,5 +139,10 @@ void hangmanHeading (void);
  * @brief Creates a Footer with the names of the contributors
  */
 void hangmanFooter(void);
+
+/**
+ * @brief Displays a instruction-text for the hangman game
+ */
+void displayInstruction();
 
 #endif //HANGMAN_H

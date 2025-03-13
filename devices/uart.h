@@ -105,8 +105,8 @@ void uart_clearScreen();
 
 
 /**
- * @brief Writes a string on the terminal in the color red
+ * @brief Writes a string on the terminal in the color green and bold
  *
  * @param string as char pointer
  */
-void uart_writeRedString(const char * string);
+void uart_writeGreenString(const char * string);

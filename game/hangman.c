@@ -118,9 +118,9 @@ void hangman (const char *word, uint8_t length);
 
 void stopTimerForTrysAndAddSums(void);
 
-void getRandomWord( char *word, uint8_t length );
+void getRandomWord(char *word, uint8_t length, char decision);
 
-void getUserWord( char *word, uint8_t length);
+void getUserWord(char *word, uint8_t length);
 
 void hangmanEnd();
 
@@ -128,12 +128,14 @@ void hangmanHeading();
 
 void hangmanFooter();
 
+void displayInstruction();
+
 void gameStart (void)
 {
   hangmanHeading();
   char choice = 0;
   char word [ 20 ];
-  uart_writeString("Welcome to Hangman!\nWhich mode do you like?\n(1) Random word or (2) own word\nYour choice: ");
+  uart_writeString("Welcome to Hangman!\nWhich mode do you like?\n(1) Random word\n(2) Own word\n(3) Instructions \nYour choice: ");
   while (choice != '1' && choice != '2')
   {
     if (choice != 0)
@@ -142,11 +144,21 @@ void gameStart (void)
       uart_writeString("Your choice: ");
     }
     choice = uart_readByte();
-
   }
   if (choice == '1')
   {
-    getRandomWord(word, sizeof(word));
+    uart_writeString("\n\nSelect difficulty for the word:\n(1) Easy\n(2) Medium\n(3) Hard\n Your choice: ");
+    char decision = 0;
+    while (decision != '1' && decision != '2' && decision !='3')
+    {
+      if (decision != 0)
+      {
+        uart_writeString("\nInvalid choice!\n");
+        uart_writeString("Your choice: ");
+      }
+      decision = uart_readByte();
+    }
+    getRandomWord(word, sizeof(word), decision);
     startTimerForWholeGame();
     startTimerForTrys();
     hangman(word, sizeof(word));
@@ -156,6 +168,10 @@ void gameStart (void)
     getUserWord(word, sizeof(word));
     startTimerForWholeGame();
     hangman(word, sizeof(word));
+  }
+  else if (choice == '3')
+  {
+    displayInstruction();
   }
 }
 
@@ -218,17 +234,42 @@ void getUserWord( char *word, uint8_t length)
   hangmanHeading();
 }
 
-void getRandomWord( char *word, const uint8_t length )
+void getRandomWord( char *word, const uint8_t length, const char decision)
 {
   rng_init();
-  const uint8_t randIndex = rng_getRandomValue_waiting() % 20;
-  uint8_t i = 0;
-  while (WORDS[randIndex][i] != '\0' && i < length - 1)
+  if (decision == '1')
   {
-    word[i] = WORDS[randIndex][i];
-    i++;
+    const uint8_t randIndex = rng_getRandomValue_waiting() % 20;
+    uint8_t i = 0;
+    while (EASY_WORDS[randIndex][i] != '\0' && i < length - 1)
+    {
+      word[i] = EASY_WORDS[randIndex][i];
+      i++;
+    }
+    word[i] = '\0';
   }
-  word[i] = '\0';
+  else if (decision == '2')
+  {
+    const uint8_t randIndex = rng_getRandomValue_waiting() % 20;
+    uint8_t i = 0;
+    while (MEDIUM_WORDS[randIndex][i] != '\0' && i < length - 1)
+    {
+      word[i] = MEDIUM_WORDS[randIndex][i];
+      i++;
+    }
+    word[i] = '\0';
+  }
+  else if (decision == '3')
+  {
+    const uint8_t randIndex = rng_getRandomValue_waiting() % 20;
+    uint8_t i = 0;
+    while (HARD_WORDS[randIndex][i] != '\0' && i < length - 1)
+    {
+      word[i] = HARD_WORDS[randIndex][i];
+      i++;
+    }
+    word[i] = '\0';
+  }
   uart_writeString("\nDebug: Word: ");
   uart_writeString(word);
 }
@@ -352,8 +393,13 @@ void hangmanEnd(void)
   uart_writeString("\n\n");
   uart_writeString("(1) Play again or (2) Exit\nYour choice: ");
   char choice = 0;
-  while (choice == 0 && choice != '1' && choice != '2')
+  while (choice != '1' && choice != '2')
   {
+    if (choice != 0)
+    {
+      uart_writeString("\nInvalid choice!\n");
+      uart_writeString("Your choice: ");
+    }
     choice = uart_readByte();
   }
   if (choice == '1')
@@ -365,20 +411,26 @@ void hangmanEnd(void)
   {
     uart_writeString("\nGoodbye!\n");
     uart_writeString("('STR + A' and then 'X' will terminate qemu)\n\n");
+    hangmanFooter();
   }
 }
 
 void hangmanHeading()
 {
   uart_clearScreen();
-  uart_writeRedString("*---------------------------------------------------------------------------------*\n");
-  uart_writeRedString("*---------------------------------- Hangman Game ---------------------------------*\n");
-  uart_writeRedString("*---------------------------------------------------------------------------------*\n\n");
+  uart_writeGreenString("*---------------------------------------------------------------------------------*\n");
+  uart_writeGreenString("*---------------------------------- Hangman Game ---------------------------------*\n");
+  uart_writeGreenString("*---------------------------------------------------------------------------------*\n\n");
 }
 
 void hangmanFooter()
 {
-  uart_writeRedString("\n*---------------------------------------------------------------------------------*\n");
-  uart_writeRedString  ("*--- Created by Janne Nußbaum, Justin Lotwin, Linus Gerlach and Nils Fleschhut ---*\n");
-  uart_writeRedString  ("*---------------------------------------------------------------------------------*\n\n");
+  uart_writeGreenString("\n*---------------------------------------------------------------------------------*\n");
+  uart_writeGreenString  ("*--- Created by Janne Nußbaum, Justin Lotwin, Linus Gerlach and Nils Fleschhut ---*\n");
+  uart_writeGreenString  ("*---------------------------------------------------------------------------------*\n\n");
+}
+
+void displayInstruction()
+{
+
 }
