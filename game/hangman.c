@@ -3,6 +3,7 @@
 #include "../devices/random.h"
 #include "drawings.h"
 #include "hangman_timer.h"
+#include "../devices/timer.h"
 
 const char* WORDS[] = {
   "lampe",
@@ -96,15 +97,13 @@ const char* HARD_WORDS[] = {
   "quicksilver"
 };
 
-
-uint32_t sumOfTimesOfTrys = 0;
-uint32_t sumOfTrys = 0;
+char timerForTrysEnds;
 
 uint8_t compareArrays(const char *word, const char *lines, uint8_t counter);
 
 void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft);
 
-void hangmanLose(const char *word, uint8_t rightGuesses);
+void hangmanLose(const char *word, uint8_t rightGuesses, uint8_t counter);
 
 void makeLinesArray(const char *word, char *lines, uint8_t length, uint8_t *counter);
 
@@ -115,8 +114,6 @@ uint8_t checkGuess( const char *word, char *lines, char guess, uint8_t length );
 char getGuess();
 
 void hangman (const char *word, uint8_t length);
-
-void stopTimerForTrysAndAddSums(void);
 
 void getRandomWord(char *word, uint8_t length, char decision);
 
@@ -136,7 +133,7 @@ void gameStart (void)
   char choice = 0;
   char word [ 20 ];
   uart_writeString("Welcome to Hangman!\nWhich mode do you like?\n(1) Random word\n(2) Own word\n(3) Instructions \nYour choice: ");
-  while (choice != '1' && choice != '2')
+  while (choice != '1' && choice != '2' && choice != '3')
   {
     if (choice != 0)
     {
@@ -167,6 +164,7 @@ void gameStart (void)
   {
     getUserWord(word, sizeof(word));
     startTimerForWholeGame();
+    startTimerForTrys();
     hangman(word, sizeof(word));
   }
   else if (choice == '3')
@@ -198,9 +196,7 @@ void hangman (const char *word, const uint8_t length)
     uart_writeString("\n");
     hangmanFooter();
     char guess = getGuess();
-    stopTimerForTrysAndAddSums();
     hangmanHeading();
-    startTimerForTrys();
     uint8_t found = checkGuess(word, lines, guess, length);
     if (found == 1)
     {
@@ -210,7 +206,7 @@ void hangman (const char *word, const uint8_t length)
     drawHangman(triesLeft);
     if (triesLeft == 0)
     {
-      hangmanLose(word, rightGuesses);
+      hangmanLose(word, rightGuesses, counter);
       break;
     }
     userWon = compareArrays(word, lines, counter);
@@ -219,12 +215,6 @@ void hangman (const char *word, const uint8_t length)
   {
     hangmanWin(lines, counter, triesLeft);
   }
-}
-
-void stopTimerForTrysAndAddSums() {
-  uint32_t timeOfTry = stopTimerForTrys();
-  sumOfTimesOfTrys += timeOfTry;
-  sumOfTrys ++;
 }
 
 void getUserWord( char *word, uint8_t length)
@@ -285,14 +275,15 @@ uint8_t compareArrays(const char *word, const char *lines, uint8_t counter)
   }
   return 1;
 }
-void hangmanLose(const char *word, uint8_t rightGuesses)
+
+void hangmanLose(const char *word, uint8_t rightGuesses, uint8_t counter)
 {
   uart_writeString("You lost! Your word was: ");
   uart_writeString(word);
   uart_writeString("\n");
   uint32_t valueOfTimerForWholeGame = stopTimerForWholeGame();
-  stopTimerForTrysAndAddSums();
-  promtTimeStatistics( valueOfTimerForWholeGame, sumOfTimesOfTrys, sumOfTrys );
+  stopTimerForTrys();
+  promtTimeStatistics( valueOfTimerForWholeGame, counter);
   uint8_t wrongGuesses = 11;
   uint8_t tries = rightGuesses + wrongGuesses;
   uart_writeString("You did need: ");
@@ -310,8 +301,8 @@ void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft)
   uart_writeString("\n");
   uart_writeString("You won!\n");
   uint32_t valueOfTimerForWholeGame = stopTimerForWholeGame();
-  stopTimerForTrysAndAddSums();
-  promtTimeStatistics( valueOfTimerForWholeGame, sumOfTimesOfTrys, sumOfTrys );
+  stopTimerForTrys();
+  promtTimeStatistics( valueOfTimerForWholeGame, counter);
   uint8_t wrongGuesses = 11 - triesLeft;
   uint8_t tries = counter + wrongGuesses;
   uart_writeString("You did need: ");
@@ -381,7 +372,8 @@ uint8_t checkGuess(const char *word, char *lines, const char guess, const uint8_
 char getGuess()
 {
   char guess = 0;
-  while (guess == 0)
+  timerForTrysEnds = 0;
+  while (guess == 0 && timerForTrysEnds == 0)
   {
     guess = uart_readByte();
   }
@@ -432,5 +424,9 @@ void hangmanFooter()
 
 void displayInstruction()
 {
-
+  uart_writeString("\n\nThe game \"Hangman\" works as follows:\n\n");
+  uart_writeString("1. Choose whether you want to guess a pre-generated word or come up\nwith your own word that someone else has to guess.\nIf you choose the first option, you can select a difficulty level.\nThis only affects the words to be guessed.\n\n");
+  uart_writeString("2. Now, dashes representing each letter of the word will be displayed.\nTry to guess the word by entering letters. But be careful you only have\n5 seconds for each input; otherwise, it will be counted as a mistake.\n\n");
+  uart_writeString("3. If you guess a letter correctly, it will replace the corresponding dash.\nIf your input is incorrect, it counts as a mistake, and a part of the\nhangman figure will be drawn.\n\n");
+  uart_writeString("4. If you guess the word correctly, you win.\nIf the hangman drawing is completed, you lose.\n\n");
 }

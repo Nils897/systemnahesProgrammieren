@@ -28,7 +28,7 @@ void startTimerForTrys(void);
  *
  * @return
  */
-uint32_t stopTimerForTrys(void);
+void stopTimerForTrys(void);
 
 
 /**
@@ -68,7 +68,7 @@ uint32_t changeTimerValueToMilliseconds ( uint32_t value );
  *
  * @return
  */
-uint32_t averageAnswerTime( uint32_t sumOfTimesOfTries, uint32_t sumOfTries );
+uint32_t averageAnswerTime( uint32_t timeOfWholeGame, uint8_t counterOfInputs );
 
 
 /**
@@ -76,6 +76,6 @@ uint32_t averageAnswerTime( uint32_t sumOfTimesOfTries, uint32_t sumOfTries );
  *
  * @params
  */
-void promtTimeStatistics ( uint32_t timeOfWholeGame, uint32_t sumOfTimesOfTries, uint32_t sumOfTries );
+void promtTimeStatistics ( uint32_t timeOfWholeGame, uint8_t counterOfInputs );
 
 #endif //HANGMAN_TIMER_H

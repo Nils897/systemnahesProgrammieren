@@ -35,8 +35,10 @@ void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft);
  * @param word is a char-Array which contains the word the user couldn't guess
  *
  * @param rightGuesses is a number which contains the amount of right guesses the user made
+ *
+ * @param counter is the number of over all inputs
  */
-void hangmanLose(const char *word, uint8_t rightGuesses);
+void hangmanLose(const char *word, uint8_t rightGuesses, uint8_t counter);
 
 
 /**
@@ -95,12 +97,6 @@ char getGuess();
  * @param length: Contains the length of the word to guess
  */
 void hangman (const char *word, uint8_t length);
-
-
-/**
- * @brief
- */
-void stopTimerForTrysAndAddSums(void);
 
 
 /**

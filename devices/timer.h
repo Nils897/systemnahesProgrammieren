@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+extern char timerForTrysEnds;
+
 typedef enum Timer {
   TIMER0,
   TIMER1,
