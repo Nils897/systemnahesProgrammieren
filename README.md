@@ -123,3 +123,15 @@ Da das Spiel mit User Input funkioniert, muss man das Projekt in der Shell start
    `cd Path/to/your/build/directory`
 
    `cmake --build --preset arm-cortex-m0-unix` bzw. `cmake --build --preset arm-cortex-m0-mingw`
+
+   `qemu-system-arm -M microbit -device loader,file=build-cortex-m0/testApp.elf -nographic -serial mon:stdio`
+5. Speichern sie die Datei (in vi: ESC um Befehlsmodus zu öffnen, `:wq` um zu speichern und in die Shell zurückzugehen)
+6. Um zu überprüfen, ob es geklappt hat, könnnen Sie mit `cat yourFileName` den Inhalt der Datei anzeigen lassen.
+7. Um die Datei auszuführen, müssen die Executable-Rechte setzen. Das machen Sie mit `chmod 700 path/to/your/file`. Zur Überprüfung: Machen Sie im richtigen Verzeichnis `ls -l yourFileName`. Dort müsste dann am Anfang der Zeile folgendes stehen: -rwx------
+8. Nun können Sie mit `./yourFileName` die Datei ausführen. Dabei wird dann das Projekt neu gebaut und auch gestartet.
+
+### Spielen des Spiels
+Das Hangman-Spiel hat einen eigenen Instructions-Abschnitt, den man bei der ersten "Entscheidung" auswählen kann. In diesem steht alles zu den Regeln des Spiels weswegen das hier nicht mehr gemacht wird.
+
+### Beenden des Spiels
+Falls Sie das Spiel vorzeitig beenden wollen, müssen die QEMU beenden. Das machen Sie, indem Sie zuerst "STR + A" drücken und dann "X". 

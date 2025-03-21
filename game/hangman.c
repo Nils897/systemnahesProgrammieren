@@ -132,7 +132,7 @@ void gameStart (void)
   hangmanHeading();
   char choice = 0;
   char word [ 20 ];
-  uart_writeString("Welcome to Hangman!\nWhich mode do you like?\n(1) Random word\n(2) Own word\n(3) Instructions \nYour choice: ");
+  uart_writeString("Welcome to Hangman!\nWhich mode would you like to play?\n(1) Random word\n(2) Own word \n(3) Instructions \nYour choice: ");
   while (choice != '1' && choice != '2' && choice != '3')
   {
     if (choice != 0)
@@ -144,7 +144,9 @@ void gameStart (void)
   }
   if (choice == '1')
   {
-    uart_writeString("\n\nSelect difficulty for the word:\n(1) Easy\n(2) Medium\n(3) Hard\n Your choice: ");
+    uart_clearScreen();
+    hangmanHeading();
+    uart_writeString("Select difficulty for the word:\n(1) Easy\n(2) Medium\n(3) Hard\n Your choice: ");
     char decision = 0;
     while (decision != '1' && decision != '2' && decision !='3')
     {
@@ -158,10 +160,15 @@ void gameStart (void)
     getRandomWord(word, sizeof(word), decision);
     startTimerForWholeGame();
     startTimerForTrys();
+    uart_clearScreen();
+    hangmanHeading();
     hangman(word, sizeof(word));
   }
   else if (choice == '2')
   {
+    uart_clearScreen();
+    hangmanHeading();
+    uart_writeString("\n\nNow you can enter the word you like. (Less than 20 characters)\n");
     getUserWord(word, sizeof(word));
     startTimerForWholeGame();
     startTimerForTrys();
@@ -260,8 +267,6 @@ void getRandomWord( char *word, const uint8_t length, const char decision)
     }
     word[i] = '\0';
   }
-  uart_writeString("\nDebug: Word: ");
-  uart_writeString(word);
 }
 
 uint8_t compareArrays(const char *word, const char *lines, uint8_t counter)
@@ -424,9 +429,21 @@ void hangmanFooter()
 
 void displayInstruction()
 {
-  uart_writeString("\n\nThe game \"Hangman\" works as follows:\n\n");
-  uart_writeString("1. Choose whether you want to guess a pre-generated word or come up\nwith your own word that someone else has to guess.\nIf you choose the first option, you can select a difficulty level.\nThis only affects the words to be guessed.\n\n");
-  uart_writeString("2. Now, dashes representing each letter of the word will be displayed.\nTry to guess the word by entering letters. But be careful you only have\n5 seconds for each input; otherwise, it will be counted as a mistake.\n\n");
+  uart_clearScreen();
+  hangmanHeading();
+  uart_writeString("The game \"Hangman\" works as follows:\n\n");
+  uart_writeString("1. Choose whether you want to guess a pre-generated word or come up\nwith your own word that someone else has to guess.\nIf you choose the first option, you can select a difficulty level.\nThis only affects the word thats to be guessed. All pre-generated words are in english.\n\n");
+  uart_writeString("2. Now, dashes representing each letter of the word will be displayed.\nTry to guess the word by entering letters. (Use lower case characters | ss instead of ß | ue for ü | ae for ä | oe for ö)\nBut be careful you only have\n5 seconds for each input; otherwise, it will be counted as a mistake.\n\n");
   uart_writeString("3. If you guess a letter correctly, it will replace the corresponding dash.\nIf your input is incorrect, it counts as a mistake, and a part of the\nhangman figure will be drawn.\n\n");
-  uart_writeString("4. If you guess the word correctly, you win.\nIf the hangman drawing is completed, you lose.\n\n");
+  uart_writeString("4. If you guess the word correctly, you win.\nIf the hangman drawing is completed, you lose.\nThe hangman-figure looks like this. So you have 11 tries and on the 11th you'll lose.\n\n");
+  drawHangman(0);
+  uart_writeString("\n5. After the game is finished you can choose whether to exit the game or play again\n");
+  uart_writeString("\n\n(Use Escape to go back to the game-mode choice)\n\n");
+  hangmanFooter();
+  char choice = 0;
+  while (choice != 27)
+  {
+    choice = uart_readByte();
+  }
+  gameStart();
 }
