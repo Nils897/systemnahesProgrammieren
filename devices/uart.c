@@ -110,7 +110,7 @@ uint8_t uart_readByte()
 
 void uart_readLine(char* buffer, uint8_t maxLen) {
   uint8_t i = 0;
-  uart_writeString("\nEnter your word: ");
+  uart_writeString("\nEnter your word (confirm with enter: ");
   while (i < maxLen - 1) {
     uint8_t input = 0;
     input = uart_readByte();
