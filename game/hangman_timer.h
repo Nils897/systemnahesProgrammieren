@@ -4,77 +4,70 @@
 #include <stdint.h>
 
 /**
- * @brief
+ * @brief starts timer which is counting the time of the whole game
  */
 void startTimerForWholeGame(void);
 
 
 /**
- * @brief
+ * @brief stops timer which is counting the time of the whole game
  *
- * @return
+ * @return value of the timer
  */
 uint32_t stopTimerForWholeGame(void);
 
 
 /**
- * @brief
+ * @brief starts timer which is counting the time which the player has for his try
  */
 void startTimerForTrys(void);
 
 
 /**
- * @brief
+ * @brief stops timer which is counting the time which the player has for his try
  *
- * @return
+ * @return vlaue of the timer
  */
 void stopTimerForTrys(void);
 
 
 /**
- * @brief
+ * @brief change the timer value from mega-seconds to seconds
  *
- * @param
+ * @param value of the timer
  *
- * @return
+ * @return value in seconds
  */
 uint32_t changeTimerValueToSeconds ( uint32_t value );
 
-
 /**
- * @brief
+ * @brief change the timer value from mega-seconds to milliseconds
  *
- * @param
+ * @param value of the timer
  *
- * @return
- */
-uint32_t changeTimerValueToSeconds ( uint32_t value );
-
-
-/**
- * @brief
- *
- * @param
- *
- * @return
+ * @return value in milliseconds (only value after comma)
  */
 uint32_t changeTimerValueToMilliseconds ( uint32_t value );
 
 
 /**
- * @brief
+ * @brief calculate the average answer time of the player
  *
- * @params
+ * @param timeOfWholeGame value of the timer for the whole game
  *
- * @return
+ * @param counterOfInputs count of inputs from the player
+ *
+ * @return value of average answer time
  */
 uint32_t averageAnswerTime( uint32_t timeOfWholeGame, uint8_t counterOfInputs );
 
 
 /**
- * @brief
+ * @brief promt the timer statistics on the screen
  *
- * @params
+ * @param timeOfWholeGame value of the timer for the whole game
+ *
+ * @param counterOfInputs count of inputs from the player
  */
 void promtTimeStatistics ( uint32_t timeOfWholeGame, uint8_t counterOfInputs );
 

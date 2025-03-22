@@ -217,6 +217,7 @@ void hangman (const char *word, const uint8_t length)
       break;
     }
     userWon = compareArrays(word, lines, counter);
+    startTimerForTrys();
   }
   if (triesLeft != 0)
   {
@@ -288,9 +289,9 @@ void hangmanLose(const char *word, uint8_t rightGuesses, uint8_t counter)
   uart_writeString("\n");
   uint32_t valueOfTimerForWholeGame = stopTimerForWholeGame();
   stopTimerForTrys();
-  promtTimeStatistics( valueOfTimerForWholeGame, counter);
   uint8_t wrongGuesses = 11;
   uint8_t tries = rightGuesses + wrongGuesses;
+  promtTimeStatistics( valueOfTimerForWholeGame, tries );
   uart_writeString("You did need: ");
   uart_writeNumber(tries);
   uart_writeString(" Guesses with ");
@@ -307,9 +308,9 @@ void hangmanWin(const char *lines, uint8_t counter, uint8_t triesLeft)
   uart_writeString("You won!\n");
   uint32_t valueOfTimerForWholeGame = stopTimerForWholeGame();
   stopTimerForTrys();
-  promtTimeStatistics( valueOfTimerForWholeGame, counter);
   uint8_t wrongGuesses = 11 - triesLeft;
   uint8_t tries = counter + wrongGuesses;
+  promtTimeStatistics( valueOfTimerForWholeGame, tries );
   uart_writeString("You did need: ");
   uart_writeNumber(tries);
   uart_writeString(" Guesses with ");
@@ -382,6 +383,7 @@ char getGuess()
   {
     guess = uart_readByte();
   }
+  stopTimerForTrys();
   return guess;
 }
 
